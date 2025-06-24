@@ -1,0 +1,10 @@
+{
+  "current_term": 5,
+  "voted_for": "node1",
+  "log": [
+    {
+      "term": 3,
+      "command_id": "cmd123"
+    }
+  ]
+}
