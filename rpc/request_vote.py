@@ -28,3 +28,6 @@ class RequestVoteReply:
     def from_json(data):
         obj = json.loads(data)
         return RequestVoteReply(**obj)
+
+
+#new +++
