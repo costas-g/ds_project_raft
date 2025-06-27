@@ -26,7 +26,7 @@ def setup_logger(node_id):
     logger = logging.getLogger(node_id)
     logger.setLevel(logging.INFO)
     fh = logging.FileHandler(f"logs/{node_id}.log")
-    formatter = logging.Formatter('%(asctime)s [%(name)s] %(message)s')
+    formatter = logging.Formatter('%(asctime)s [%(name)s] -- %(message)s')
     fh.setFormatter(formatter)
     logger.addHandler(fh)
     return logger

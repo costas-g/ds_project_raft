@@ -1,0 +1,24 @@
+class Command:
+    def __init__(self, cmd_type, key, value=None):
+        allowed_cmds = ['set', 'update', 'delete']
+        if cmd_type not in allowed_cmds:
+            raise ValueError(f"Invalid command type: {cmd_type}")
+        self.cmd_type = cmd_type
+        self.key = key
+        self.value = value
+        
+    def __repr__(self):
+        return f"Command({self.cmd_type}, {self.key}, {self.value})"
+
+    def to_dict(self):
+        return {
+            "cmd_type": self.cmd_type,
+            "key": self.key,
+            "value": self.value
+        }
+
+    @staticmethod
+    def from_dict(d):
+        return Command(d['cmd_type'], d['key'], d.get('value'))
+    
+    
