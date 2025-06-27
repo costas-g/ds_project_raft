@@ -7,7 +7,9 @@ class RaftState:
         self.current_term = 0
         self.voted_for = None
         self.log = []
-        self.state_file = f'state_{node_id}.json'
+        self.state_dir = 'states'
+        os.makedirs(self.state_dir, exist_ok=True)
+        self.state_file = os.path.join(self.state_dir, f'state_{node_id}.json')
         self.load()
 
     def load(self):

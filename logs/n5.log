@@ -1,0 +1,1366 @@
+2025-06-26 08:30:06,551 [n5] Node n5 starting
+2025-06-26 08:30:06,551 [n5] initialized_state: {'term': 0, 'voted_for': None, 'log_length': 0}
+2025-06-26 08:30:06,552 [n5] server_started: {'host': '127.0.0.1', 'port': '5005'}
+2025-06-26 08:31:19,154 [n5] Node n5 starting
+2025-06-26 08:31:19,155 [n5] initialized_state: {'term': 0, 'voted_for': None, 'log_length': 0}
+2025-06-26 08:31:19,155 [n5] server_started: {'host': '127.0.0.1', 'port': '5005'}
+2025-06-26 08:31:19,634 [n5] term_updated: {'term': 240}
+2025-06-26 08:31:19,634 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:19,634 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:19,635 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:19,635 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:19,636 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:20,144 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:20,650 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:21,162 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:21,667 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:22,175 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:22,689 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:23,200 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:23,701 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:24,212 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:24,723 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:25,234 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:25,744 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:26,253 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:26,762 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:27,273 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:27,784 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:28,299 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:28,812 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:29,326 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:29,833 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:30,340 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:30,846 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:31,352 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:31,859 [n5] heartbeat_received: {'leader_id': 'n1'}
+2025-06-26 08:31:33,591 [n5] term_updated: {'term': 241}
+2025-06-26 08:31:33,592 [n5] vote_decision: {'candidate_id': 'n4', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:31:34,105 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:34,612 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:35,116 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:35,626 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:36,141 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:36,651 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:37,158 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:37,666 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:38,179 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:38,692 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:39,205 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:39,718 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:40,228 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:40,736 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:41,245 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:41,754 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:42,263 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:42,773 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:43,287 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:43,799 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:44,311 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:44,826 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:45,341 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:45,854 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:46,369 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:46,886 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:47,396 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:47,909 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:48,408 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:48,920 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:49,428 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:49,936 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:50,441 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:50,948 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:51,458 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:51,969 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:52,478 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:52,985 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:53,492 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:54,003 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:54,511 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:55,024 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:55,533 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:56,038 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:56,554 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:57,062 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:57,563 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:58,073 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:58,581 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:59,090 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:31:59,600 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:00,111 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:00,623 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:01,136 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:01,649 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:02,156 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:02,664 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:03,174 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:03,675 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:04,179 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:04,683 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:05,194 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:05,710 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:06,223 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:06,735 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:07,248 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:07,759 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:08,259 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:08,771 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:09,281 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:09,790 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:10,301 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:10,818 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:11,329 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:11,837 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:12,375 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:12,875 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:13,382 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:13,893 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:14,402 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:14,911 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:15,422 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:15,934 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:16,444 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:16,953 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:17,461 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:17,973 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:18,482 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:18,983 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:19,492 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:19,998 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:20,510 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:21,021 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:21,533 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:22,044 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:22,552 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:23,057 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:23,568 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:24,079 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:24,590 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:25,100 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:25,609 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:26,117 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:26,629 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:27,141 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:27,649 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:28,162 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:28,662 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:29,176 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:29,686 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:30,193 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:30,706 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:31,204 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:31,718 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:32,226 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:32,737 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:33,249 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:33,762 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:34,277 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:34,784 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:35,294 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:35,802 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:36,312 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:36,819 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:37,330 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:37,836 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:38,336 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:38,845 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:32:39,346 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:23,096 [n5] Node n5 starting
+2025-06-26 08:33:23,098 [n5] initialized_state: {'term': 241, 'voted_for': 'n4', 'log_length': 0}
+2025-06-26 08:33:23,098 [n5] server_started: {'host': '127.0.0.1', 'port': '5005'}
+2025-06-26 08:33:23,250 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:23,251 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:23,251 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:23,251 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:23,251 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:23,758 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:24,272 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:24,781 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:25,294 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:25,807 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:26,317 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:26,824 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:27,338 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:27,838 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:28,350 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:28,859 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:29,367 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:29,879 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:30,388 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:30,898 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:31,410 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:31,923 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:32,425 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:32,929 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:33,442 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:33,952 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:34,465 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:33:35,993 [n5] term_updated: {'term': 242}
+2025-06-26 08:33:35,998 [n5] vote_decision: {'candidate_id': 'n2', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:33:36,513 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:37,027 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:37,540 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:38,052 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:38,568 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:39,080 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:39,593 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:40,102 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:40,609 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:41,121 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:41,632 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:42,139 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:42,648 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:43,162 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:43,673 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:44,182 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:44,691 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:45,197 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:45,704 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:46,212 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:46,720 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:47,230 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:47,739 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:48,250 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:48,761 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:49,268 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:49,775 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:50,283 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:50,795 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:51,301 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:51,810 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:52,321 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:52,832 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:53,337 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:53,845 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:54,355 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:54,863 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:55,374 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:55,883 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:56,391 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:56,892 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:57,407 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:57,918 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:58,426 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:58,936 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:59,450 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:33:59,958 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:00,474 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:00,986 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:01,495 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:02,007 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:02,516 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:03,027 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:03,536 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:04,047 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:04,562 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:05,066 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:05,579 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:06,089 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:06,594 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:07,102 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:08,856 [n5] term_updated: {'term': 243}
+2025-06-26 08:34:08,857 [n5] vote_decision: {'candidate_id': 'n3', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:34:09,364 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:09,873 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:10,387 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:10,902 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:11,412 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:11,923 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:12,434 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:12,950 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:13,459 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:13,969 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:14,478 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:14,988 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:15,496 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:16,003 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:16,513 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:17,023 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:17,535 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:18,044 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:18,553 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:19,061 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:19,569 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:20,078 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:20,586 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:21,096 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:21,604 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:22,113 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:22,623 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:23,131 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:23,640 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:24,150 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:24,664 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:25,174 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:25,684 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:26,191 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:26,698 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:27,205 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:27,711 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:28,219 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:28,729 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:29,236 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:29,746 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:30,258 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:30,769 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:31,279 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:31,789 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:32,294 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:32,802 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:33,310 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:33,821 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:34,329 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:34,827 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:35,342 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:35,852 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:36,362 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:36,870 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:37,379 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:37,890 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:38,404 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:38,916 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:39,422 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:39,930 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:40,445 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:40,950 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:41,469 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:41,975 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:42,483 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:42,997 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:43,508 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:44,018 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:44,519 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:45,029 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:45,534 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:46,041 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:46,551 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:34:48,223 [n5] term_updated: {'term': 244}
+2025-06-26 08:34:48,225 [n5] vote_decision: {'candidate_id': 'n2', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:34:48,731 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:49,239 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:49,751 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:50,261 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:50,768 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:51,278 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:51,787 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:52,297 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:52,797 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:53,309 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:53,819 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:54,329 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:54,838 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:55,345 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:55,854 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:56,365 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:56,872 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:57,372 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:57,878 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:58,385 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:58,891 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:59,403 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:34:59,915 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:00,425 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:00,933 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:01,439 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:01,946 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:02,454 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:02,962 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:03,470 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:03,980 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:04,495 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:05,000 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:05,498 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:06,006 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:06,514 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:07,022 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:07,537 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:08,041 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:08,544 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:09,060 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:09,569 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:10,074 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:11,780 [n5] term_updated: {'term': 245}
+2025-06-26 08:35:11,781 [n5] vote_decision: {'candidate_id': 'n3', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:35:12,297 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:12,807 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:13,319 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:13,829 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:14,338 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:14,848 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:15,357 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:15,864 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:16,374 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:16,885 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:17,389 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:17,890 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:18,396 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:18,905 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:35:21,337 [n5] election_started: {'term': 246}
+2025-06-26 08:35:21,344 [n5] vote_received: {'from_node': 'n2', 'term': 246, 'total_votes': 2}
+2025-06-26 08:35:21,344 [n5] vote_received: {'from_node': 'n3', 'term': 246, 'total_votes': 3}
+2025-06-26 08:35:21,345 [n5] became_leader: {'term': 246}
+2025-06-26 08:35:21,857 [n5] heartbeats_sent: {}
+2025-06-26 08:35:22,365 [n5] heartbeats_sent: {}
+2025-06-26 08:35:22,876 [n5] heartbeats_sent: {}
+2025-06-26 08:35:23,386 [n5] heartbeats_sent: {}
+2025-06-26 08:35:23,897 [n5] heartbeats_sent: {}
+2025-06-26 08:35:24,406 [n5] heartbeats_sent: {}
+2025-06-26 08:35:24,916 [n5] heartbeats_sent: {}
+2025-06-26 08:35:25,423 [n5] heartbeats_sent: {}
+2025-06-26 08:35:25,929 [n5] heartbeats_sent: {}
+2025-06-26 08:35:26,437 [n5] heartbeats_sent: {}
+2025-06-26 08:35:26,949 [n5] heartbeats_sent: {}
+2025-06-26 08:35:27,463 [n5] heartbeats_sent: {}
+2025-06-26 08:35:27,970 [n5] heartbeats_sent: {}
+2025-06-26 08:35:28,478 [n5] heartbeats_sent: {}
+2025-06-26 08:35:28,987 [n5] heartbeats_sent: {}
+2025-06-26 08:35:29,494 [n5] heartbeats_sent: {}
+2025-06-26 08:35:30,210 [n5] Node n5 starting
+2025-06-26 08:35:30,218 [n5] initialized_state: {'term': 246, 'voted_for': 'n5', 'log_length': 0}
+2025-06-26 08:35:30,218 [n5] server_started: {'host': '127.0.0.1', 'port': '5005'}
+2025-06-26 08:35:32,047 [n5] term_updated: {'term': 247}
+2025-06-26 08:35:32,049 [n5] vote_decision: {'candidate_id': 'n2', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:35:32,554 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:33,065 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:33,573 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:34,083 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:34,596 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:35,104 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:35,612 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:36,115 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:36,619 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:37,128 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:37,637 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:38,147 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:38,655 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:39,163 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:41,235 [n5] election_started: {'term': 248}
+2025-06-26 08:35:41,242 [n5] vote_received: {'from_node': 'n1', 'term': 248, 'total_votes': 2}
+2025-06-26 08:35:41,243 [n5] vote_received: {'from_node': 'n3', 'term': 248, 'total_votes': 3}
+2025-06-26 08:35:41,243 [n5] became_leader: {'term': 248}
+2025-06-26 08:35:41,757 [n5] heartbeats_sent: {}
+2025-06-26 08:35:42,263 [n5] heartbeats_sent: {}
+2025-06-26 08:35:42,772 [n5] heartbeats_sent: {}
+2025-06-26 08:35:43,278 [n5] heartbeats_sent: {}
+2025-06-26 08:35:43,785 [n5] heartbeats_sent: {}
+2025-06-26 08:35:44,299 [n5] heartbeats_sent: {}
+2025-06-26 08:35:44,806 [n5] heartbeats_sent: {}
+2025-06-26 08:35:45,318 [n5] heartbeats_sent: {}
+2025-06-26 08:35:45,830 [n5] heartbeats_sent: {}
+2025-06-26 08:35:46,537 [n5] Node n5 starting
+2025-06-26 08:35:46,545 [n5] initialized_state: {'term': 248, 'voted_for': 'n5', 'log_length': 0}
+2025-06-26 08:35:46,545 [n5] server_started: {'host': '127.0.0.1', 'port': '5005'}
+2025-06-26 08:35:48,390 [n5] term_updated: {'term': 249}
+2025-06-26 08:35:48,391 [n5] vote_decision: {'candidate_id': 'n2', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:35:48,896 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:49,408 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:49,916 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:50,427 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:50,934 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:51,446 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:51,954 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:52,462 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:52,970 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:53,482 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:53,991 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:54,501 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:55,009 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:55,522 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:56,030 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:56,537 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:57,049 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:35:57,561 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:00,137 [n5] term_updated: {'term': 250}
+2025-06-26 08:36:00,139 [n5] vote_decision: {'candidate_id': 'n4', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:36:00,645 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:01,153 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:01,661 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:02,169 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:02,677 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:03,185 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:03,695 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:04,203 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:04,713 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:05,226 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:05,742 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:06,251 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:06,757 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:08,601 [n5] term_updated: {'term': 251}
+2025-06-26 08:36:08,602 [n5] vote_decision: {'candidate_id': 'n2', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:36:09,107 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:09,611 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:10,119 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:10,626 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:11,140 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:11,647 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:12,148 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:12,650 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:13,165 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:13,679 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:15,653 [n5] term_updated: {'term': 252}
+2025-06-26 08:36:15,654 [n5] vote_decision: {'candidate_id': 'n4', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:36:16,174 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:16,681 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:17,193 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:17,699 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:18,207 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:18,710 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:19,222 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:19,731 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:21,640 [n5] term_updated: {'term': 253}
+2025-06-26 08:36:21,642 [n5] vote_decision: {'candidate_id': 'n2', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:36:22,157 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:22,670 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:23,180 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:23,691 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:24,189 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:24,691 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:26,309 [n5] term_updated: {'term': 254}
+2025-06-26 08:36:26,310 [n5] vote_decision: {'candidate_id': 'n4', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:36:26,829 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:27,342 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:27,852 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:28,363 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:28,871 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:29,384 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:29,897 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:30,409 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:32,751 [n5] term_updated: {'term': 255}
+2025-06-26 08:36:32,753 [n5] vote_decision: {'candidate_id': 'n2', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:36:33,271 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:33,779 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:34,290 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:34,800 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:35,309 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:35,819 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:36,327 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:36,837 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:37,349 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:37,863 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:38,375 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:36:39,970 [n5] term_updated: {'term': 256}
+2025-06-26 08:36:39,973 [n5] vote_decision: {'candidate_id': 'n4', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:36:40,488 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:40,994 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:41,502 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:42,009 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:42,523 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:43,026 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:45,633 [n5] election_started: {'term': 257}
+2025-06-26 08:36:45,640 [n5] vote_received: {'from_node': 'n1', 'term': 257, 'total_votes': 2}
+2025-06-26 08:36:45,641 [n5] vote_received: {'from_node': 'n3', 'term': 257, 'total_votes': 3}
+2025-06-26 08:36:45,641 [n5] became_leader: {'term': 257}
+2025-06-26 08:36:46,142 [n5] heartbeats_sent: {}
+2025-06-26 08:36:46,650 [n5] heartbeats_sent: {}
+2025-06-26 08:36:47,157 [n5] heartbeats_sent: {}
+2025-06-26 08:36:47,665 [n5] heartbeats_sent: {}
+2025-06-26 08:36:48,172 [n5] heartbeats_sent: {}
+2025-06-26 08:36:48,686 [n5] heartbeats_sent: {}
+2025-06-26 08:36:49,188 [n5] heartbeats_sent: {}
+2025-06-26 08:36:49,695 [n5] heartbeats_sent: {}
+2025-06-26 08:36:50,728 [n5] Node n5 starting
+2025-06-26 08:36:50,736 [n5] initialized_state: {'term': 257, 'voted_for': 'n5', 'log_length': 0}
+2025-06-26 08:36:50,737 [n5] server_started: {'host': '127.0.0.1', 'port': '5005'}
+2025-06-26 08:36:52,051 [n5] term_updated: {'term': 258}
+2025-06-26 08:36:52,053 [n5] vote_decision: {'candidate_id': 'n4', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:36:52,556 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:53,066 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:53,572 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:54,083 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:54,598 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:55,113 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:55,622 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:58,249 [n5] term_updated: {'term': 259}
+2025-06-26 08:36:58,250 [n5] vote_decision: {'candidate_id': 'n4', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:36:58,766 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:59,276 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:36:59,786 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:00,299 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:00,806 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:01,314 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:01,825 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:02,338 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:02,848 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:03,356 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:03,858 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:04,372 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:04,885 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:05,397 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:05,907 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:06,420 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:06,920 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:07,433 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:07,951 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:08,454 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:08,968 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:09,470 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:09,982 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:10,495 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:11,006 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:11,515 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:12,022 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:12,530 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:13,039 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:13,551 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:14,065 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:14,575 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:15,086 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:15,599 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:16,111 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:16,625 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:17,138 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:17,649 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:18,156 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:18,671 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:19,179 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:19,687 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:20,202 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:20,709 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:21,218 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:21,724 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:22,237 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:22,744 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:23,257 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:23,767 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:24,278 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:24,787 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:25,294 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:25,801 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:26,308 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:26,817 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:27,327 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:27,834 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:28,345 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:28,854 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:29,364 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:29,876 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:30,384 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:30,894 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:31,406 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:31,920 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:32,428 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:32,936 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:33,446 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:33,955 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:34,463 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:34,976 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:35,487 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:35,996 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:36,504 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:37,012 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:37,522 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:38,035 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:38,546 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:39,053 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:39,562 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:40,068 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:40,577 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:41,083 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:41,596 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:42,106 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:42,615 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:43,124 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:43,633 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:44,143 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:44,655 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:45,163 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:45,673 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:46,180 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:46,688 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:47,197 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:47,708 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:48,218 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:48,730 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:49,243 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:49,747 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:50,245 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:50,748 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:51,259 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:51,772 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:52,273 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:52,779 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:53,282 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:53,797 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:54,302 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:54,814 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:37:57,479 [n5] election_started: {'term': 260}
+2025-06-26 08:37:57,483 [n5] vote_received: {'from_node': 'n1', 'term': 260, 'total_votes': 2}
+2025-06-26 08:37:57,483 [n5] vote_received: {'from_node': 'n2', 'term': 260, 'total_votes': 3}
+2025-06-26 08:37:57,483 [n5] became_leader: {'term': 260}
+2025-06-26 08:37:57,986 [n5] heartbeats_sent: {}
+2025-06-26 08:37:58,492 [n5] heartbeats_sent: {}
+2025-06-26 08:37:59,006 [n5] heartbeats_sent: {}
+2025-06-26 08:37:59,514 [n5] heartbeats_sent: {}
+2025-06-26 08:38:00,023 [n5] heartbeats_sent: {}
+2025-06-26 08:38:00,523 [n5] heartbeats_sent: {}
+2025-06-26 08:38:01,033 [n5] heartbeats_sent: {}
+2025-06-26 08:38:01,545 [n5] heartbeats_sent: {}
+2025-06-26 08:38:02,053 [n5] heartbeats_sent: {}
+2025-06-26 08:38:02,681 [n5] Node n5 starting
+2025-06-26 08:38:02,688 [n5] initialized_state: {'term': 260, 'voted_for': 'n5', 'log_length': 0}
+2025-06-26 08:38:02,689 [n5] server_started: {'host': '127.0.0.1', 'port': '5005'}
+2025-06-26 08:38:04,225 [n5] election_started: {'term': 261}
+2025-06-26 08:38:04,230 [n5] vote_received: {'from_node': 'n1', 'term': 261, 'total_votes': 2}
+2025-06-26 08:38:04,231 [n5] vote_received: {'from_node': 'n2', 'term': 261, 'total_votes': 3}
+2025-06-26 08:38:04,231 [n5] became_leader: {'term': 261}
+2025-06-26 08:38:04,733 [n5] heartbeats_sent: {}
+2025-06-26 08:38:05,242 [n5] heartbeats_sent: {}
+2025-06-26 08:38:05,752 [n5] heartbeats_sent: {}
+2025-06-26 08:38:06,260 [n5] heartbeats_sent: {}
+2025-06-26 08:38:06,775 [n5] heartbeats_sent: {}
+2025-06-26 08:38:07,283 [n5] heartbeats_sent: {}
+2025-06-26 08:38:07,791 [n5] heartbeats_sent: {}
+2025-06-26 08:38:08,301 [n5] heartbeats_sent: {}
+2025-06-26 08:38:08,813 [n5] heartbeats_sent: {}
+2025-06-26 08:38:09,319 [n5] heartbeats_sent: {}
+2025-06-26 08:38:09,828 [n5] heartbeats_sent: {}
+2025-06-26 08:38:10,336 [n5] heartbeats_sent: {}
+2025-06-26 08:38:10,843 [n5] heartbeats_sent: {}
+2025-06-26 08:38:11,353 [n5] heartbeats_sent: {}
+2025-06-26 08:38:18,537 [n5] Node n5 starting
+2025-06-26 08:38:18,545 [n5] initialized_state: {'term': 261, 'voted_for': 'n5', 'log_length': 0}
+2025-06-26 08:38:18,545 [n5] server_started: {'host': '127.0.0.1', 'port': '5005'}
+2025-06-26 08:38:18,695 [n5] term_updated: {'term': 262}
+2025-06-26 08:38:18,695 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:18,697 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:18,697 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:18,699 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:18,704 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:19,201 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:19,709 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:20,223 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:20,733 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:21,249 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:21,746 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:22,262 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:22,774 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:23,284 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:25,722 [n5] election_started: {'term': 263}
+2025-06-26 08:38:25,729 [n5] vote_received: {'from_node': 'n1', 'term': 263, 'total_votes': 2}
+2025-06-26 08:38:25,730 [n5] vote_received: {'from_node': 'n3', 'term': 263, 'total_votes': 3}
+2025-06-26 08:38:25,730 [n5] became_leader: {'term': 263}
+2025-06-26 08:38:26,231 [n5] heartbeats_sent: {}
+2025-06-26 08:38:26,739 [n5] heartbeats_sent: {}
+2025-06-26 08:38:27,246 [n5] heartbeats_sent: {}
+2025-06-26 08:38:27,750 [n5] heartbeats_sent: {}
+2025-06-26 08:38:28,263 [n5] heartbeats_sent: {}
+2025-06-26 08:38:28,769 [n5] heartbeats_sent: {}
+2025-06-26 08:38:29,270 [n5] heartbeats_sent: {}
+2025-06-26 08:38:29,780 [n5] heartbeats_sent: {}
+2025-06-26 08:38:30,286 [n5] heartbeats_sent: {}
+2025-06-26 08:38:30,796 [n5] heartbeats_sent: {}
+2025-06-26 08:38:31,311 [n5] heartbeats_sent: {}
+2025-06-26 08:38:31,820 [n5] heartbeats_sent: {}
+2025-06-26 08:38:32,330 [n5] heartbeats_sent: {}
+2025-06-26 08:38:32,842 [n5] heartbeats_sent: {}
+2025-06-26 08:38:33,351 [n5] heartbeats_sent: {}
+2025-06-26 08:38:33,858 [n5] heartbeats_sent: {}
+2025-06-26 08:38:34,365 [n5] heartbeats_sent: {}
+2025-06-26 08:38:36,953 [n5] Node n5 starting
+2025-06-26 08:38:36,961 [n5] initialized_state: {'term': 263, 'voted_for': 'n5', 'log_length': 0}
+2025-06-26 08:38:36,962 [n5] server_started: {'host': '127.0.0.1', 'port': '5005'}
+2025-06-26 08:38:37,197 [n5] term_updated: {'term': 264}
+2025-06-26 08:38:37,199 [n5] vote_decision: {'candidate_id': 'n4', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:38:37,704 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:38,213 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:38,723 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:39,233 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:39,736 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:40,242 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:40,752 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:41,270 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:42,958 [n5] election_started: {'term': 265}
+2025-06-26 08:38:42,962 [n5] vote_received: {'from_node': 'n1', 'term': 265, 'total_votes': 2}
+2025-06-26 08:38:42,962 [n5] vote_received: {'from_node': 'n3', 'term': 265, 'total_votes': 3}
+2025-06-26 08:38:42,962 [n5] became_leader: {'term': 265}
+2025-06-26 08:38:43,469 [n5] heartbeats_sent: {}
+2025-06-26 08:38:43,977 [n5] heartbeats_sent: {}
+2025-06-26 08:38:44,487 [n5] heartbeats_sent: {}
+2025-06-26 08:38:44,996 [n5] heartbeats_sent: {}
+2025-06-26 08:38:45,507 [n5] heartbeats_sent: {}
+2025-06-26 08:38:46,014 [n5] heartbeats_sent: {}
+2025-06-26 08:38:46,526 [n5] heartbeats_sent: {}
+2025-06-26 08:38:47,035 [n5] heartbeats_sent: {}
+2025-06-26 08:38:47,536 [n5] heartbeats_sent: {}
+2025-06-26 08:38:48,045 [n5] heartbeats_sent: {}
+2025-06-26 08:38:48,559 [n5] heartbeats_sent: {}
+2025-06-26 08:38:49,478 [n5] Node n5 starting
+2025-06-26 08:38:49,488 [n5] initialized_state: {'term': 265, 'voted_for': 'n5', 'log_length': 0}
+2025-06-26 08:38:49,488 [n5] server_started: {'host': '127.0.0.1', 'port': '5005'}
+2025-06-26 08:38:50,577 [n5] term_updated: {'term': 266}
+2025-06-26 08:38:50,578 [n5] vote_decision: {'candidate_id': 'n4', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:38:51,096 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:51,610 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:52,120 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:52,628 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:53,137 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:53,646 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:54,161 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:54,671 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:38:57,510 [n5] term_updated: {'term': 267}
+2025-06-26 08:38:57,512 [n5] vote_decision: {'candidate_id': 'n2', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:38:58,030 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:58,535 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:59,045 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:38:59,551 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:00,058 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:00,566 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:01,080 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:01,583 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:02,086 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:02,595 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:05,063 [n5] term_updated: {'term': 268}
+2025-06-26 08:39:05,065 [n5] vote_decision: {'candidate_id': 'n4', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:39:05,569 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:06,079 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:06,586 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:07,088 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:07,605 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:08,105 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:08,618 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:09,133 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:10,858 [n5] term_updated: {'term': 269}
+2025-06-26 08:39:10,860 [n5] vote_decision: {'candidate_id': 'n2', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:39:11,379 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:11,888 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:12,403 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:12,911 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:13,419 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:13,928 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:14,438 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:14,948 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:15,463 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:15,965 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:16,471 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:18,069 [n5] term_updated: {'term': 270}
+2025-06-26 08:39:18,070 [n5] vote_decision: {'candidate_id': 'n4', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:39:18,575 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:19,085 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:19,596 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:20,108 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:20,614 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:21,132 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:21,643 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:22,149 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:22,660 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:23,168 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:23,675 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:24,185 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:24,699 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:25,215 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:25,721 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:26,229 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:26,735 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:27,246 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:27,753 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:28,255 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:28,770 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:29,281 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:29,792 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:30,299 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:31,835 [n5] term_updated: {'term': 271}
+2025-06-26 08:39:31,837 [n5] vote_decision: {'candidate_id': 'n2', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:39:32,341 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:32,859 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:33,366 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:33,874 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:34,382 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:34,895 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:35,405 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:35,914 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:39:37,804 [n5] term_updated: {'term': 272}
+2025-06-26 08:39:37,804 [n5] vote_decision: {'candidate_id': 'n3', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:39:38,317 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:39:38,827 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:39:39,334 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:39:39,843 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:39:40,352 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:39:40,862 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:39:41,372 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:39:41,882 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:39:42,393 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:39:42,907 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:39:43,419 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:39:45,466 [n5] term_updated: {'term': 273}
+2025-06-26 08:39:45,468 [n5] vote_decision: {'candidate_id': 'n4', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:39:45,973 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:46,480 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:46,994 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:47,505 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:48,008 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:48,520 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:49,035 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:49,546 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:50,047 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:50,563 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:51,077 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:51,592 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:52,100 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:52,609 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:53,123 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:53,632 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:54,137 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:54,646 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:55,156 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:55,665 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:56,171 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:56,676 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:57,184 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:57,696 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:58,204 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:58,711 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:59,219 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:39:59,727 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:00,235 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:00,742 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:01,249 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:01,756 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:02,268 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:02,774 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:03,279 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:03,787 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:04,296 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:04,809 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:05,323 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:05,821 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:06,337 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:06,848 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:07,359 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:07,862 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:08,378 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:08,894 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:09,403 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:09,903 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:10,414 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:10,922 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:11,431 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:11,941 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:12,456 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:12,963 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:13,468 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:13,983 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:14,497 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:15,001 [n5] heartbeat_received: {'leader_id': 'n4'}
+2025-06-26 08:40:17,300 [n5] term_updated: {'term': 274}
+2025-06-26 08:40:17,301 [n5] vote_decision: {'candidate_id': 'n3', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:17,807 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:40:18,318 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:40:18,826 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:40:19,338 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:40:19,844 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:40:20,350 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:40:20,859 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:40:21,367 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:40:21,871 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:40:22,372 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:40:22,881 [n5] heartbeat_received: {'leader_id': 'n3'}
+2025-06-26 08:40:25,655 [n5] term_updated: {'term': 275}
+2025-06-26 08:40:25,655 [n5] vote_decision: {'candidate_id': 'n2', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:26,163 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:40:26,674 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:40:27,188 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:40:27,700 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:40:28,214 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:40:28,724 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:40:29,232 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:40:29,741 [n5] heartbeat_received: {'leader_id': 'n2'}
+2025-06-26 08:40:32,689 [n5] term_updated: {'term': 276}
+2025-06-26 08:40:32,691 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:34,808 [n5] term_updated: {'term': 277}
+2025-06-26 08:40:34,810 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:37,076 [n5] term_updated: {'term': 278}
+2025-06-26 08:40:37,078 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:39,347 [n5] term_updated: {'term': 279}
+2025-06-26 08:40:39,348 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:40,895 [n5] term_updated: {'term': 280}
+2025-06-26 08:40:40,896 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:43,374 [n5] term_updated: {'term': 281}
+2025-06-26 08:40:43,375 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:45,699 [n5] term_updated: {'term': 282}
+2025-06-26 08:40:45,700 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:48,128 [n5] term_updated: {'term': 283}
+2025-06-26 08:40:48,129 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:50,679 [n5] term_updated: {'term': 284}
+2025-06-26 08:40:50,680 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:53,064 [n5] term_updated: {'term': 285}
+2025-06-26 08:40:53,065 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:54,947 [n5] term_updated: {'term': 286}
+2025-06-26 08:40:54,948 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:56,991 [n5] term_updated: {'term': 287}
+2025-06-26 08:40:56,993 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:40:59,142 [n5] term_updated: {'term': 288}
+2025-06-26 08:40:59,143 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:41:00,748 [n5] term_updated: {'term': 289}
+2025-06-26 08:41:00,749 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:41:03,700 [n5] term_updated: {'term': 290}
+2025-06-26 08:41:03,701 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:41:06,459 [n5] term_updated: {'term': 291}
+2025-06-26 08:41:06,459 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:41:08,347 [n5] term_updated: {'term': 292}
+2025-06-26 08:41:08,348 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:41:11,222 [n5] term_updated: {'term': 293}
+2025-06-26 08:41:11,223 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:41:13,033 [n5] term_updated: {'term': 294}
+2025-06-26 08:41:13,035 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:41:15,910 [n5] term_updated: {'term': 295}
+2025-06-26 08:41:15,911 [n5] vote_decision: {'candidate_id': 'n1', 'vote_granted': True, 'reason': 'vote granted'}
+2025-06-26 08:41:18,908 [n5] election_started: {'term': 296}
+2025-06-26 08:41:20,951 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:41:20,952 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:41:20,952 [n5] send_failed: {'peer': 'n1', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:41:20,952 [n5] send_failed: {'peer': 'n4', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:41:21,354 [n5] election_started: {'term': 297}
+2025-06-26 08:50:56,145 [n5] Node n5 starting
+2025-06-26 08:50:56,154 [n5] initialized_state: {'term': 297, 'voted_for': 'n5', 'log_length': 0}
+2025-06-26 08:50:57,915 [n5] election_started: {'term': 298}
+2025-06-26 08:50:57,921 [n5] term_updated: {'term': 305}
+2025-06-26 08:50:59,883 [n5] election_started: {'term': 306}
+2025-06-26 08:50:59,890 [n5] vote_received: {'from_node': 'n1', 'term': 306, 'total_votes': 2}
+2025-06-26 08:50:59,892 [n5] vote_received: {'from_node': 'n3', 'term': 306, 'total_votes': 3}
+2025-06-26 08:50:59,892 [n5] became_leader: {'term': 306}
+2025-06-26 08:51:00,395 [n5] heartbeats_sent: {}
+2025-06-26 08:51:00,905 [n5] heartbeats_sent: {}
+2025-06-26 08:51:01,417 [n5] heartbeats_sent: {}
+2025-06-26 08:51:01,929 [n5] heartbeats_sent: {}
+2025-06-26 08:51:02,440 [n5] heartbeats_sent: {}
+2025-06-26 08:51:02,948 [n5] heartbeats_sent: {}
+2025-06-26 08:51:03,457 [n5] heartbeats_sent: {}
+2025-06-26 08:51:03,966 [n5] heartbeats_sent: {}
+2025-06-26 08:51:04,470 [n5] heartbeats_sent: {}
+2025-06-26 08:51:04,981 [n5] heartbeats_sent: {}
+2025-06-26 08:51:05,493 [n5] heartbeats_sent: {}
+2025-06-26 08:51:06,007 [n5] heartbeats_sent: {}
+2025-06-26 08:51:06,516 [n5] heartbeats_sent: {}
+2025-06-26 08:51:07,025 [n5] heartbeats_sent: {}
+2025-06-26 08:51:07,533 [n5] heartbeats_sent: {}
+2025-06-26 08:51:08,045 [n5] heartbeats_sent: {}
+2025-06-26 08:51:08,560 [n5] heartbeats_sent: {}
+2025-06-26 08:51:09,071 [n5] heartbeats_sent: {}
+2025-06-26 08:51:09,575 [n5] heartbeats_sent: {}
+2025-06-26 08:51:10,084 [n5] heartbeats_sent: {}
+2025-06-26 08:51:10,591 [n5] heartbeats_sent: {}
+2025-06-26 08:51:11,098 [n5] heartbeats_sent: {}
+2025-06-26 08:51:11,602 [n5] heartbeats_sent: {}
+2025-06-26 08:51:12,106 [n5] heartbeats_sent: {}
+2025-06-26 08:51:12,613 [n5] heartbeats_sent: {}
+2025-06-26 08:51:13,120 [n5] heartbeats_sent: {}
+2025-06-26 08:51:13,626 [n5] heartbeats_sent: {}
+2025-06-26 08:51:14,135 [n5] heartbeats_sent: {}
+2025-06-26 08:51:14,641 [n5] heartbeats_sent: {}
+2025-06-26 08:51:15,151 [n5] heartbeats_sent: {}
+2025-06-26 08:51:15,660 [n5] heartbeats_sent: {}
+2025-06-26 08:51:16,173 [n5] heartbeats_sent: {}
+2025-06-26 08:51:16,682 [n5] heartbeats_sent: {}
+2025-06-26 08:51:17,190 [n5] heartbeats_sent: {}
+2025-06-26 08:51:17,699 [n5] heartbeats_sent: {}
+2025-06-26 08:51:18,206 [n5] heartbeats_sent: {}
+2025-06-26 08:51:18,711 [n5] heartbeats_sent: {}
+2025-06-26 08:51:19,211 [n5] heartbeats_sent: {}
+2025-06-26 08:51:19,720 [n5] heartbeats_sent: {}
+2025-06-26 08:51:20,228 [n5] heartbeats_sent: {}
+2025-06-26 08:51:20,736 [n5] heartbeats_sent: {}
+2025-06-26 08:51:21,244 [n5] heartbeats_sent: {}
+2025-06-26 08:51:21,754 [n5] heartbeats_sent: {}
+2025-06-26 08:51:22,261 [n5] heartbeats_sent: {}
+2025-06-26 08:51:22,770 [n5] heartbeats_sent: {}
+2025-06-26 08:51:23,275 [n5] heartbeats_sent: {}
+2025-06-26 08:51:23,788 [n5] heartbeats_sent: {}
+2025-06-26 08:51:24,289 [n5] heartbeats_sent: {}
+2025-06-26 08:51:24,791 [n5] heartbeats_sent: {}
+2025-06-26 08:51:25,305 [n5] heartbeats_sent: {}
+2025-06-26 08:51:25,805 [n5] heartbeats_sent: {}
+2025-06-26 08:51:26,317 [n5] heartbeats_sent: {}
+2025-06-26 08:51:26,828 [n5] heartbeats_sent: {}
+2025-06-26 08:51:27,338 [n5] heartbeats_sent: {}
+2025-06-26 08:51:27,852 [n5] heartbeats_sent: {}
+2025-06-26 08:51:28,352 [n5] heartbeats_sent: {}
+2025-06-26 08:51:28,866 [n5] heartbeats_sent: {}
+2025-06-26 08:51:29,377 [n5] heartbeats_sent: {}
+2025-06-26 08:51:29,883 [n5] heartbeats_sent: {}
+2025-06-26 08:52:47,637 [n5] Node n5 starting
+2025-06-26 08:52:47,645 [n5] initialized_state: {'term': 306, 'voted_for': 'n5', 'log_length': 0}
+2025-06-26 08:52:50,003 [n5] election_started: {'term': 307}
+2025-06-26 08:52:50,009 [n5] term_updated: {'term': 309}
+2025-06-26 08:52:52,875 [n5] election_started: {'term': 310}
+2025-06-26 08:52:52,881 [n5] vote_received: {'from_node': 'n1', 'term': 310, 'total_votes': 2}
+2025-06-26 08:52:52,881 [n5] vote_received: {'from_node': 'n2', 'term': 310, 'total_votes': 3}
+2025-06-26 08:52:52,881 [n5] became_leader: {'term': 310}
+2025-06-26 08:52:53,384 [n5] heartbeats_sent: {}
+2025-06-26 08:52:53,894 [n5] heartbeats_sent: {}
+2025-06-26 08:52:54,404 [n5] heartbeats_sent: {}
+2025-06-26 08:52:54,917 [n5] heartbeats_sent: {}
+2025-06-26 08:52:55,426 [n5] heartbeats_sent: {}
+2025-06-26 08:52:55,936 [n5] heartbeats_sent: {}
+2025-06-26 08:52:56,449 [n5] heartbeats_sent: {}
+2025-06-26 08:52:56,958 [n5] heartbeats_sent: {}
+2025-06-26 08:52:57,463 [n5] heartbeats_sent: {}
+2025-06-26 08:52:57,971 [n5] heartbeats_sent: {}
+2025-06-26 08:52:58,483 [n5] heartbeats_sent: {}
+2025-06-26 08:52:58,991 [n5] heartbeats_sent: {}
+2025-06-26 08:52:59,501 [n5] heartbeats_sent: {}
+2025-06-26 08:53:00,013 [n5] heartbeats_sent: {}
+2025-06-26 08:53:00,523 [n5] heartbeats_sent: {}
+2025-06-26 08:53:01,025 [n5] heartbeats_sent: {}
+2025-06-26 08:53:01,533 [n5] heartbeats_sent: {}
+2025-06-26 08:53:02,042 [n5] heartbeats_sent: {}
+2025-06-26 08:53:02,548 [n5] heartbeats_sent: {}
+2025-06-26 08:53:03,059 [n5] heartbeats_sent: {}
+2025-06-26 08:53:03,565 [n5] heartbeats_sent: {}
+2025-06-26 08:53:04,074 [n5] heartbeats_sent: {}
+2025-06-26 08:53:35,143 [n5] Node n5 starting
+2025-06-26 08:53:35,152 [n5] initialized_state: {'term': 310, 'voted_for': 'n5', 'log_length': 0}
+2025-06-26 08:53:37,049 [n5] election_started: {'term': 311}
+2025-06-26 08:53:39,081 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:39,595 [n5] election_started: {'term': 312}
+2025-06-26 08:53:39,598 [n5] vote_received: {'from_node': 'n1', 'term': 312, 'total_votes': 2}
+2025-06-26 08:53:39,598 [n5] vote_received: {'from_node': 'n2', 'term': 312, 'total_votes': 3}
+2025-06-26 08:53:39,598 [n5] became_leader: {'term': 312}
+2025-06-26 08:53:40,105 [n5] heartbeats_sent: {}
+2025-06-26 08:53:40,619 [n5] heartbeats_sent: {}
+2025-06-26 08:53:41,127 [n5] heartbeats_sent: {}
+2025-06-26 08:53:41,634 [n5] heartbeats_sent: {}
+2025-06-26 08:53:41,637 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:42,145 [n5] heartbeats_sent: {}
+2025-06-26 08:53:42,145 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:42,659 [n5] heartbeats_sent: {}
+2025-06-26 08:53:42,662 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:43,174 [n5] heartbeats_sent: {}
+2025-06-26 08:53:43,175 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:43,682 [n5] heartbeats_sent: {}
+2025-06-26 08:53:43,696 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:44,185 [n5] heartbeats_sent: {}
+2025-06-26 08:53:44,200 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:44,693 [n5] heartbeats_sent: {}
+2025-06-26 08:53:44,709 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:45,201 [n5] heartbeats_sent: {}
+2025-06-26 08:53:45,216 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:45,711 [n5] heartbeats_sent: {}
+2025-06-26 08:53:45,713 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:46,220 [n5] heartbeats_sent: {}
+2025-06-26 08:53:46,222 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:46,728 [n5] heartbeats_sent: {}
+2025-06-26 08:53:46,729 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:47,234 [n5] heartbeats_sent: {}
+2025-06-26 08:53:47,234 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:47,743 [n5] heartbeats_sent: {}
+2025-06-26 08:53:47,744 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:48,253 [n5] heartbeats_sent: {}
+2025-06-26 08:53:48,256 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:48,763 [n5] heartbeats_sent: {}
+2025-06-26 08:53:48,764 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:49,273 [n5] heartbeats_sent: {}
+2025-06-26 08:53:49,274 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:49,784 [n5] heartbeats_sent: {}
+2025-06-26 08:53:49,784 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:50,296 [n5] heartbeats_sent: {}
+2025-06-26 08:53:50,298 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:50,803 [n5] heartbeats_sent: {}
+2025-06-26 08:53:50,805 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:51,310 [n5] heartbeats_sent: {}
+2025-06-26 08:53:51,312 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:51,822 [n5] heartbeats_sent: {}
+2025-06-26 08:53:51,823 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:52,335 [n5] heartbeats_sent: {}
+2025-06-26 08:53:52,335 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:52,837 [n5] heartbeats_sent: {}
+2025-06-26 08:53:52,837 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:53,349 [n5] heartbeats_sent: {}
+2025-06-26 08:53:53,351 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:53,859 [n5] heartbeats_sent: {}
+2025-06-26 08:53:53,860 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:54,371 [n5] heartbeats_sent: {}
+2025-06-26 08:53:54,386 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:54,880 [n5] heartbeats_sent: {}
+2025-06-26 08:53:54,880 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:55,390 [n5] heartbeats_sent: {}
+2025-06-26 08:53:55,392 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:55,897 [n5] heartbeats_sent: {}
+2025-06-26 08:53:55,899 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:56,406 [n5] heartbeats_sent: {}
+2025-06-26 08:53:56,407 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:56,914 [n5] heartbeats_sent: {}
+2025-06-26 08:53:56,916 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:57,422 [n5] heartbeats_sent: {}
+2025-06-26 08:53:57,423 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:57,423 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:57,931 [n5] heartbeats_sent: {}
+2025-06-26 08:53:57,931 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:57,931 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:58,435 [n5] heartbeats_sent: {}
+2025-06-26 08:53:58,435 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:58,435 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:58,942 [n5] heartbeats_sent: {}
+2025-06-26 08:53:58,944 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:58,944 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:59,448 [n5] heartbeats_sent: {}
+2025-06-26 08:53:59,450 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:59,451 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:59,957 [n5] heartbeats_sent: {}
+2025-06-26 08:53:59,959 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:53:59,959 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:00,466 [n5] heartbeats_sent: {}
+2025-06-26 08:54:00,467 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:00,468 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:00,974 [n5] heartbeats_sent: {}
+2025-06-26 08:54:00,974 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:00,974 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:01,307 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,307 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,308 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,310 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,311 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,311 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,313 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,313 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,314 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,314 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,314 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,315 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,315 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,316 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,316 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,316 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,316 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,317 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,317 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,317 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,318 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,319 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,319 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,319 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,319 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,319 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,319 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,320 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,320 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,320 [n5] send_failed: {'peer': 'n2', 'error': '0 bytes read on a total of 4 expected bytes'}
+2025-06-26 08:54:01,485 [n5] heartbeats_sent: {}
+2025-06-26 08:54:01,486 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:01,486 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:01,997 [n5] heartbeats_sent: {}
+2025-06-26 08:54:01,998 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:01,998 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:02,506 [n5] heartbeats_sent: {}
+2025-06-26 08:54:02,507 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:02,507 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:03,016 [n5] heartbeats_sent: {}
+2025-06-26 08:54:03,016 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:03,017 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:03,525 [n5] heartbeats_sent: {}
+2025-06-26 08:54:03,525 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:03,526 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:04,034 [n5] heartbeats_sent: {}
+2025-06-26 08:54:04,034 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:04,035 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:04,546 [n5] heartbeats_sent: {}
+2025-06-26 08:54:04,548 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:04,548 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:05,056 [n5] heartbeats_sent: {}
+2025-06-26 08:54:05,056 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:05,057 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:05,568 [n5] heartbeats_sent: {}
+2025-06-26 08:54:05,568 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:05,568 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:06,077 [n5] heartbeats_sent: {}
+2025-06-26 08:54:06,077 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:06,077 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:06,586 [n5] heartbeats_sent: {}
+2025-06-26 08:54:06,587 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:06,587 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:07,093 [n5] heartbeats_sent: {}
+2025-06-26 08:54:07,094 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:07,094 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:07,607 [n5] heartbeats_sent: {}
+2025-06-26 08:54:07,607 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:07,608 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:08,117 [n5] heartbeats_sent: {}
+2025-06-26 08:54:08,118 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:08,118 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:08,623 [n5] heartbeats_sent: {}
+2025-06-26 08:54:08,624 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:08,624 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:09,134 [n5] heartbeats_sent: {}
+2025-06-26 08:54:09,135 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:09,135 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:09,649 [n5] heartbeats_sent: {}
+2025-06-26 08:54:09,651 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:09,651 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:10,156 [n5] heartbeats_sent: {}
+2025-06-26 08:54:10,158 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:10,158 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:10,662 [n5] heartbeats_sent: {}
+2025-06-26 08:54:10,662 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:10,663 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:11,173 [n5] heartbeats_sent: {}
+2025-06-26 08:54:11,174 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:11,174 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:11,684 [n5] heartbeats_sent: {}
+2025-06-26 08:54:11,685 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:11,685 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:12,197 [n5] heartbeats_sent: {}
+2025-06-26 08:54:12,198 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:12,198 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:12,710 [n5] heartbeats_sent: {}
+2025-06-26 08:54:12,712 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:12,712 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:13,221 [n5] heartbeats_sent: {}
+2025-06-26 08:54:13,221 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:13,221 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:13,731 [n5] heartbeats_sent: {}
+2025-06-26 08:54:13,732 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:13,732 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:14,241 [n5] heartbeats_sent: {}
+2025-06-26 08:54:14,243 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:14,243 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:14,750 [n5] heartbeats_sent: {}
+2025-06-26 08:54:14,750 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:14,750 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:15,258 [n5] heartbeats_sent: {}
+2025-06-26 08:54:15,259 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:15,259 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:15,772 [n5] heartbeats_sent: {}
+2025-06-26 08:54:15,773 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:15,773 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:16,283 [n5] heartbeats_sent: {}
+2025-06-26 08:54:16,286 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:16,286 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:16,790 [n5] heartbeats_sent: {}
+2025-06-26 08:54:16,791 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:16,791 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:17,299 [n5] heartbeats_sent: {}
+2025-06-26 08:54:17,299 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:17,300 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:17,808 [n5] heartbeats_sent: {}
+2025-06-26 08:54:17,809 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:17,810 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:18,318 [n5] heartbeats_sent: {}
+2025-06-26 08:54:18,318 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:18,318 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:18,825 [n5] heartbeats_sent: {}
+2025-06-26 08:54:18,826 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:18,826 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:19,334 [n5] heartbeats_sent: {}
+2025-06-26 08:54:19,334 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:19,335 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:19,846 [n5] heartbeats_sent: {}
+2025-06-26 08:54:19,846 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:19,847 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:20,356 [n5] heartbeats_sent: {}
+2025-06-26 08:54:20,357 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:20,358 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:20,867 [n5] heartbeats_sent: {}
+2025-06-26 08:54:20,868 [n5] send_failed: {'peer': 'n1', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:20,868 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:20,868 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:21,371 [n5] heartbeats_sent: {}
+2025-06-26 08:54:21,372 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:21,372 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:21,372 [n5] send_failed: {'peer': 'n1', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:21,884 [n5] heartbeats_sent: {}
+2025-06-26 08:54:21,885 [n5] send_failed: {'peer': 'n1', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:21,885 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:21,885 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:22,396 [n5] heartbeats_sent: {}
+2025-06-26 08:54:22,397 [n5] send_failed: {'peer': 'n2', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:22,398 [n5] send_failed: {'peer': 'n3', 'error': '[WinError 1225] The remote computer refused the network connection'}
+2025-06-26 08:54:22,398 [n5] send_failed: {'peer': 'n1', 'error': '[WinError 1225] The remote computer refused the network connection'}

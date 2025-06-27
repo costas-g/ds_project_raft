@@ -5,7 +5,8 @@ import logging
 from raft.raft_node import RaftNode
 
 def load_config():
-    with open(os.path.join(os.path.dirname(__file__), 'cluster_config.json')) as f:
+    # Load cluster config file and validate timing parameters
+    with open(os.path.join(os.path.dirname(__file__), 'cluster_config_3.json')) as f:
         config = json.load(f)
 
     timing = config.get("timing")
@@ -20,6 +21,7 @@ def load_config():
     return config
 
 def setup_logger(node_id):
+    # Setup per-node logger writing to logs/<node_id>.log
     os.makedirs("logs", exist_ok=True)
     logger = logging.getLogger(node_id)
     logger.setLevel(logging.INFO)
@@ -30,14 +32,20 @@ def setup_logger(node_id):
     return logger
 
 def event_logger(node_id, event, data):
+    # Event callback passed to RaftNode for logging events
     logger = logging.getLogger(node_id)
     msg = f"{event}: {data}"
     logger.info(msg)
 
 async def main(node_id):
+    # Load config and start node event loop
     config = load_config()
     peers = [n for n in config["nodes"] if n != node_id]
     timing = config["timing"]
+
+    # Setup logger FIRST, so it exists before any logging
+    logger = setup_logger(node_id)
+    logger.info(f"Node {node_id} starting")
 
     node = RaftNode(
         node_id,
@@ -49,11 +57,15 @@ async def main(node_id):
         election_timeout_max=timing["election_timeout_max"],
     )
     
-    logger = setup_logger(node_id)
-    logger.info(f"Node {node_id} starting")
-
     await node.start()
-    await asyncio.Event().wait()
+
+    # Run until interrupted, then shutdown cleanly
+    try:
+        await asyncio.Event().wait()
+    except asyncio.CancelledError:
+        pass
+    finally:
+        await node.stop()
 
 if __name__ == "__main__":
     import sys
@@ -61,4 +73,8 @@ if __name__ == "__main__":
         print("Usage: python run_node.py <node_id>")
         exit(1)
     node_id = sys.argv[1]
-    asyncio.run(main(node_id))
+
+    try:
+        asyncio.run(main(node_id))
+    except KeyboardInterrupt:
+        pass  # Allow graceful shutdown on Ctrl+C

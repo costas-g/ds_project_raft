@@ -6,8 +6,8 @@
     "n3": "127.0.0.1:5003"
   },
   "timing": {
-    "heartbeat_interval": 0.050,
-    "election_timeout_min": 0.150,
-    "election_timeout_max": 0.300
+    "heartbeat_interval": 0.50,
+    "election_timeout_min": 1.50,
+    "election_timeout_max": 3.00
   }
 }
