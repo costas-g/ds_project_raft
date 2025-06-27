@@ -2,3 +2,5 @@ generate_raft_project.py
 update.py
 test.code-workspace
 __pycache__/
+logs/
+states/
