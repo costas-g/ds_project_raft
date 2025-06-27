@@ -1,0 +1,13 @@
+{
+  "nodes": ["n1", "n2", "n3"],
+  "addresses": {
+    "n1": "127.0.0.1:5001",
+    "n2": "127.0.0.1:5002",
+    "n3": "127.0.0.1:5003"
+  },
+  "timing": {
+    "heartbeat_interval": 0.5,
+    "election_timeout_min": 1.5,
+    "election_timeout_max": 3
+  }
+}
