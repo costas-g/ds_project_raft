@@ -1,5 +1,6 @@
 import json
 import os
+from typing import List
 from raft.entry import Entry  # adjust import path as needed
 
 class RaftState:
@@ -7,7 +8,7 @@ class RaftState:
         self.node_id = node_id
         self.current_term = 0
         self.voted_for = None
-        self.log = []
+        self.log: List[Entry] = []
         self.state_dir = 'states'
         os.makedirs(self.state_dir, exist_ok=True)
         self.state_file = os.path.join(self.state_dir, f'state_{node_id}.json')
@@ -32,7 +33,8 @@ class RaftState:
 
     # helper methods for granting votes
     def get_last_log_index(self):
-        return len(self.log) - 1    # returns -1 if log is empty
+        '''Returns this node's last lost index (-1 if log is empty)'''
+        return len(self.log) - 1
 
     def get_last_log_term(self):
         if not self.log:

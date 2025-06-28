@@ -1,5 +1,11 @@
 class RequestVote:
-    def __init__(self, term, candidate_id, last_log_index, last_log_term):
+    def __init__(
+        self, 
+        term: int, 
+        candidate_id: str, 
+        last_log_index: int, 
+        last_log_term: int
+    ):
         self.term = term
         self.candidate_id = candidate_id
         self.last_log_index = last_log_index
@@ -20,6 +26,7 @@ class RequestVote:
 
 
 class RequestVoteReply:
+    # TODO: UPDATE THIS - currently not used
     def __init__(self, term, vote_granted):
         self.term = term
         self.vote_granted = vote_granted

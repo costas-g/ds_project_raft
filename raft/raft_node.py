@@ -1,16 +1,18 @@
 import asyncio
 import time
 import random
+from typing import List, Dict
 from raft.raft_state import RaftState
-from raft.rpc.request_vote import RequestVote
-from raft.rpc.append_entries import AppendEntries
+from raft.rpc.request_vote import RequestVote, RequestVoteReply
+from raft.rpc.append_entries import AppendEntries, AppendEntriesReply
 from raft.rpc.message import read_message, encode_message
+from raft.entry import Entry
 
 class RaftNode:
     def __init__(
         self,
-        node_id,
-        peers,
+        node_id: str,
+        peers: str,
         address_book,
         event_callback,
         heartbeat_interval,
@@ -20,8 +22,24 @@ class RaftNode:
         self.node_id = node_id
         self.peers = peers
         self.address_book = address_book
+
+        # Persistent State
         self.state = RaftState(node_id)
-        self.role = 'Follower'
+
+        '''When referring to indexes of the log, 
+        in the paper the first index is 1, hence initialized values for indexes are 0,
+        but since we're implementing the log as a list in python, which is 0-based,
+        we must initialize them to -1. 
+        '''
+        # Volatile state on all servers
+        self.commit_index: int = -1   # Index of highest log entry known to be committed (none at start, increases monotonically)
+        self.last_applied: int = -1   # Index of highest log entry applied to state machine (none at start, increases monotonically)
+
+        # Volatile state on leaders (Reinitialized after election)
+        self.next_index: Dict[str, int] = {}     # For each follower, index of next log entry to send (initialized later)
+        self.match_index: Dict[str, int] = {}    # For each follower, highest log entry known replicated (initialized later)
+
+        self.role: str = 'Follower'
         self.votes_received = set()
         self.election_reset_time = time.time()
         self.heartbeat_interval = heartbeat_interval
@@ -62,11 +80,13 @@ class RaftNode:
             await asyncio.sleep(0.01)
             now = time.time()
 
+            # Leader routine TODO more?
             if self.role == 'Leader':
                 if now - self.election_reset_time >= self.heartbeat_interval:
                     await self.send_heartbeats()
                     self.election_reset_time = now
 
+            # Follower Candidate routine TODO more?
             elif now - self.election_reset_time >= self.election_timeout:
                 await self.start_election()
 
@@ -91,14 +111,61 @@ class RaftNode:
             self.tasks.add(task)
             task.add_done_callback(self.tasks.discard)
 
+    async def replicate_log_to_peer(self, peer_id):
+        next_idx = self.next_index.get(peer_id, 0)
+        prev_log_index = next_idx - 1
+        prev_log_term = self.state.log[prev_log_index].term if prev_log_index >= 0 else 0
+
+        # send required entries or no entries at all (heartbeat)
+        entries_to_send = self.state.log[next_idx:] if self.state.get_last_log_index() >= next_idx else []
+
+        msg = AppendEntries(
+            term=self.state.current_term,
+            leader_id=self.node_id,
+            prev_log_index=prev_log_index,
+            prev_log_term=prev_log_term,
+            entries=entries_to_send,  # may be empty (heartbeat)
+            leader_commit=self.commit_index
+        ).to_dict()
+
+        task = asyncio.create_task(self.send_message(peer_id, msg))
+        self.tasks.add(task)
+        task.add_done_callback(self.tasks.discard)
+
     async def send_heartbeats(self):
-        # Send AppendEntries heartbeats to all peers - invoked by Leader
         for peer in self.peers:
-            msg = AppendEntries(self.state.current_term, self.node_id).to_dict()
-            task = asyncio.create_task(self.send_message(peer, msg))
+            task = asyncio.create_task(self.replicate_log_to_peer(peer))
             self.tasks.add(task)
             task.add_done_callback(self.tasks.discard)
-        self.report(f'{self.role} {self.node_id} heartbeats_sent')
+
+        self.report(
+            f'{self.role} {self.node_id} heartbeats_sent',
+            term=self.state.current_term,
+            next_index=dict(self.next_index),
+            match_index=dict(self.match_index),
+            commit_index=self.commit_index
+        )
+
+    # async def send_heartbeats(self):
+    #     for peer in self.peers:
+    #         # maybe redundant to add default value in get's 2nd parameter since the next_index dict is reinitialied when becoming leader
+    #         next_idx = self.next_index.get(peer, self.state.get_last_log_index() + 1) 
+    #         prev_log_index = next_idx - 1
+    #         prev_log_term = self.state.log[prev_log_index].term if prev_log_index >= 0 else 0
+
+    #         msg = AppendEntries(
+    #             term=self.state.current_term,
+    #             leader_id=self.node_id,
+    #             prev_log_index=prev_log_index,
+    #             prev_log_term=prev_log_term,
+    #             entries=[],  # empty for heartbeat
+    #             leader_commit=self.commit_index
+    #         ).to_dict()
+
+    #         task = asyncio.create_task(self.send_message(peer, msg))
+    #         self.tasks.add(task)
+    #         task.add_done_callback(self.tasks.discard)
+    #     self.report(f'{self.role} {self.node_id} heartbeats_sent')
 
     async def handle_message(self, message: dict):
         # Handle incoming RPC messages and update node state accordingly
@@ -111,7 +178,7 @@ class RaftNode:
             self.role = 'Follower'
             self.state.voted_for = None
             self.state.save()
-            self.report(f'{self.role} {self.node_id} term_updated (received RPC with greater term)', term=msg_term)
+            self.report(f'{self.role} {self.node_id} term_updated (received {msg_type} RPC with greater term)', term=msg_term)
 
         if msg_type == 'RequestVote':
             vote_granted = False
@@ -152,16 +219,185 @@ class RaftNode:
                 self.votes_received.add(message['source'])
                 self.report(f'{self.role} {self.node_id} vote_received', from_node=message['source'], term=msg_term, total_votes=len(self.votes_received))
                 if len(self.votes_received) > (len(self.peers) + 1) // 2:
+                    # become Leader
                     self.role = 'Leader'
+
+                    last_log_index = self.state.get_last_log_index()
+                    # Initialize nextIndex for each follower to leader’s last log index + 1
+                    self.next_index = {peer: last_log_index + 1 for peer in self.peers}
+                    # Initialize matchIndex for each follower to -1 (no entries replicated yet)
+                    self.match_index = {peer: -1 for peer in self.peers}
+
                     self.election_reset_time = time.time()
                     self.report(f'{self.role} {self.node_id} became_leader', term=self.state.current_term)
 
         elif msg_type == 'AppendEntries':
-            # Reset election timer on heartbeat from Leader
-            if msg_term == self.state.current_term:
-                self.role = 'Follower'
-                self.election_reset_time = time.time()
-                self.report(f'{self.role} {self.node_id} heartbeat_received from Leader {message['leader_id']}') #, leader_id=message['leader_id'])
+            reply = self.handle_append_entries(message)
+            return reply     
+
+        elif msg_type == 'AppendEntriesReply':
+            if self.role != 'Leader' or msg_term != self.state.current_term:
+                return  # Ignore outdated or irrelevant replies
+
+            peer_id = message['source_id']
+            success = message['success']
+
+            if success:
+                # 1. Update nextIndex and matchIndex
+                self.match_index[peer_id] = message['last_log_index']
+                self.next_index[peer_id] = message['last_log_index'] + 1
+                self.report(
+                    f'{self.role} {self.node_id} AppendEntries successful',
+                    peer=peer_id,
+                    next_index=self.next_index[peer_id]
+                )
+
+                # 2. Try to advance commitIndex
+                match_indexes = list(self.match_index.values()) + [self.state.get_last_log_index()]
+                match_indexes.sort(reverse=True)
+                majority_index = match_indexes[len(self.peers) // 2]
+
+                if majority_index > self.commit_index:
+                    entry_term = self.state.log[majority_index].term
+                    if entry_term == self.state.current_term:
+                        self.commit_index = majority_index
+                        self.report(
+                            f'{self.role} {self.node_id} commit_index_advanced',
+                            new_commit_index=self.commit_index
+                        )
+
+            else:
+                # AppendEntries failed (log inconsistency): decrement nextIndex and retry
+                self.next_index[peer_id] = max(0, self.next_index[peer_id] - 1)
+                self.report(
+                    f'{self.role} {self.node_id} AppendEntries failed: retrying',
+                    peer=peer_id,
+                    next_index=self.next_index[peer_id]
+                )
+
+    def handle_append_entries(self, message: dict):
+        term: int = message['term']
+        leader_id = message['leader_id']
+        prev_log_index: int = message['prev_log_index']
+        prev_log_term: int = message['prev_log_term']
+        entries_data = message['entries'] # type: Dict
+        leader_commit: int = message['leader_commit']
+
+        # helper function to streamline return points and avoid code duplication
+        def reply():
+            reply = AppendEntriesReply(
+                term=self.state.current_term, 
+                success=success, 
+                last_log_index=self.state.get_last_log_index(), 
+                source_id=self.node_id
+            ).to_dict()
+            return reply
+
+        # 1. Reply false if term < currentTerm
+        if term < self.state.current_term:
+            success = False
+            reason = 'stale term'
+            self.report(f'{self.role} {self.node_id} AppendEntries_processed', 
+                success=success, 
+                reason = reason, 
+                term=self.state.current_term, 
+                log_length=len(self.state.log), 
+                commit_index=self.commit_index
+            )
+
+            return reply()
+        
+        # Reset election timeout on valid AppendEntries
+        self.election_reset_time = time.time()
+        self.role = 'Follower'  # Always follower on AppendEntries from leader
+
+        # 2. Reply false if log doesn’t contain entry at prevLogIndex with matching term
+        if prev_log_index >= 0:
+            if prev_log_index >= len(self.state.log):
+                # Missing entry at prevLogIndex
+                success = False
+                reason = 'no matching entry index'
+                self.report(f'{self.role} {self.node_id} AppendEntries_processed', 
+                    success=success, 
+                    reason = reason, 
+                    term=self.state.current_term, 
+                    log_length=len(self.state.log), 
+                    commit_index=self.commit_index
+                )
+
+                return reply()
+
+            if self.state.log[prev_log_index].term != prev_log_term:
+                # Exists an entry at prev_log_index but terms mismatch
+                success = False
+                reason = 'terms mismatch'
+                self.report(f'{self.role} {self.node_id} AppendEntries_processed', 
+                    success=success, 
+                    reason = reason, 
+                    term=self.state.current_term, 
+                    log_length=len(self.state.log), 
+                    commit_index=self.commit_index
+                )
+
+                return reply()
+
+        # 3. If an existing entry conflicts with a new one, delete existing entry and all that follow it
+
+        # new_entries: List[Entry] constructed from incoming RPC
+        # Entries are list of dicts, convert to Entry objects
+        new_entries = [Entry.from_dict(e) for e in entries_data]
+
+        # index at which there is a conflicting entry
+        conflict_index = None
+
+        for i, entry in enumerate(new_entries):
+            index = prev_log_index + 1 + i
+            if index < len(self.state.log):
+                if self.state.log[index].term != entry.term:
+                    # Conflict: delete entry and all that follow it
+                    reason = f'conflicting entry at index {index}'
+                    self.state.log = self.state.log[:index]
+                    conflict_index = index
+                    # After truncation, fall through to append remaining entries
+                    break 
+            elif index == len(self.state.log):
+                # No conflict and log ends here - skip to append
+                reason = 'no conflicting entries'
+                break
+        
+        # 4. Append any new entries not already in the log
+        if conflict_index is None:
+            # append all entries sent by the Leader
+            start = 0
+        else:
+            # only append the new entries, that the follower didn't already have
+            start = conflict_index - (prev_log_index + 1)
+
+        self.state.log.extend(new_entries[start:]) # mass Append happens here
+
+        self.state.save()
+
+        # Rule 5: Update commitIndex if leaderCommit > commitIndex
+        if leader_commit > self.commit_index:
+            last_new_entry_index = prev_log_index + len(new_entries)
+            self.commit_index = min(leader_commit, last_new_entry_index)
+
+        # Optionally, apply newly committed entries to state machine here or via separate async task
+
+        success = True
+
+        if new_entries:
+            self.report(f'{self.role} {self.node_id} AppendEntries_processed', 
+                success=success, 
+                reason = reason, 
+                term=self.state.current_term, 
+                log_length=len(self.state.log), 
+                commit_index=self.commit_index
+            )
+        else:
+            self.report(f'{self.role} {self.node_id} heartbeat_received from Leader {leader_id}')
+        
+        return reply()
 
     async def send_message(self, peer_id, message):
         # Send a message over TCP to a peer and handle response

@@ -1,5 +1,7 @@
 import json
 import struct
+from typing import Dict, Any # for linters
+from asyncio import StreamReader # for linters
 from raft.rpc.request_vote import RequestVote, RequestVoteReply
 from raft.rpc.append_entries import AppendEntries, AppendEntriesReply
 
@@ -10,12 +12,12 @@ MESSAGE_TYPES = {
     "AppendEntriesReply": AppendEntriesReply,
 }
 
-def encode_message(msg_dict):
+def encode_message(msg_dict: Dict[Any, Any]):
     body = json.dumps(msg_dict).encode('utf-8')
     length = struct.pack("!I", len(body))
     return length + body
 
-async def read_message(reader):
+async def read_message(reader: StreamReader):
     length_data = await reader.readexactly(4)
     length = struct.unpack("!I", length_data)[0]
     body = await reader.readexactly(length)

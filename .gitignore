@@ -4,3 +4,5 @@ test.code-workspace
 __pycache__/
 logs/
 states/
+chatgpt.txt
+temp/
