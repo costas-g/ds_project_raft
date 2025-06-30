@@ -7,6 +7,7 @@ from raft.rpc.request_vote import RequestVote, RequestVoteReply
 from raft.rpc.append_entries import AppendEntries, AppendEntriesReply
 from raft.rpc.message import read_message, encode_message
 from raft.entry import Entry
+from raft.command import Command
 
 class RaftNode:
     def __init__(
@@ -82,13 +83,16 @@ class RaftNode:
 
             # Leader routine TODO more?
             if self.role == 'Leader':
+                # Send periodic heartbeats
                 if now - self.election_reset_time >= self.heartbeat_interval:
                     await self.send_heartbeats()
                     self.election_reset_time = now
 
-            # Follower Candidate routine TODO more?
-            elif now - self.election_reset_time >= self.election_timeout:
-                await self.start_election()
+            # Follower+Candidate routine TODO more?
+            else:
+                # Start election after timeout
+                if now - self.election_reset_time >= self.election_timeout:
+                    await self.start_election()
 
     async def start_election(self):
         # Start new election cycle, increment term and request votes
@@ -127,6 +131,8 @@ class RaftNode:
             entries=entries_to_send,  # may be empty (heartbeat)
             leader_commit=self.commit_index
         ).to_dict()
+
+        #self.report(f'{self.role} {self.node_id} SENDING {len(entries_to_send)} ENTRIES TO {peer_id}')
 
         task = asyncio.create_task(self.send_message(peer_id, msg))
         self.tasks.add(task)
@@ -218,18 +224,27 @@ class RaftNode:
             if self.role == 'Candidate' and msg_term == self.state.current_term and message['vote_granted']:
                 self.votes_received.add(message['source'])
                 self.report(f'{self.role} {self.node_id} vote_received', from_node=message['source'], term=msg_term, total_votes=len(self.votes_received))
+
                 if len(self.votes_received) > (len(self.peers) + 1) // 2:
                     # become Leader
                     self.role = 'Leader'
 
-                    last_log_index = self.state.get_last_log_index()
                     # Initialize nextIndex for each follower to leader’s last log index + 1
+                    last_log_index = self.state.get_last_log_index()
                     self.next_index = {peer: last_log_index + 1 for peer in self.peers}
                     # Initialize matchIndex for each follower to -1 (no entries replicated yet)
                     self.match_index = {peer: -1 for peer in self.peers}
 
-                    self.election_reset_time = time.time()
+                    # Append no-op entry for leadership assertion
+                    no_op_entry = Entry(self.state.current_term, command_id=None, command=Command('no-op', key=None))
+                    self.state.log.append(no_op_entry)
+                    self.state.save()
+
                     self.report(f'{self.role} {self.node_id} became_leader', term=self.state.current_term)
+
+                    # Send heartbeats immediately upon becoming Leader
+                    await self.send_heartbeats()
+                    self.election_reset_time = time.time()
 
         elif msg_type == 'AppendEntries':
             reply = self.handle_append_entries(message)
@@ -293,6 +308,7 @@ class RaftNode:
             ).to_dict()
             return reply
 
+        reason = None
         # 1. Reply false if term < currentTerm
         if term < self.state.current_term:
             success = False
@@ -360,21 +376,26 @@ class RaftNode:
                     conflict_index = index
                     # After truncation, fall through to append remaining entries
                     break 
+                else:
+                    reason = f'entries up to index {index} already existed'
+                    conflict_index = index + 1
             elif index == len(self.state.log):
-                # No conflict and log ends here - skip to append
-                reason = 'no conflicting entries'
+                if i == 0:
+                    # No conflict and log ends here - skip to append
+                    reason = 'no conflicting entries'
+                conflict_index = index
                 break
         
         # 4. Append any new entries not already in the log
         if conflict_index is None:
-            # append all entries sent by the Leader
+            # append all entries sent by the Leader (possibly redundant since conflict_index always gets a value above)
             start = 0
         else:
             # only append the new entries, that the follower didn't already have
             start = conflict_index - (prev_log_index + 1)
 
+        self.report(f'{self.role} {self.node_id} appending {len(new_entries[start:])} entries to my log', len_new_entries=len(new_entries), start_index=start)
         self.state.log.extend(new_entries[start:]) # mass Append happens here
-
         self.state.save()
 
         # Rule 5: Update commitIndex if leaderCommit > commitIndex
