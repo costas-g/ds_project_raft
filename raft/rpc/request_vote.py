@@ -26,18 +26,23 @@ class RequestVote:
 
 
 class RequestVoteReply:
-    # TODO: UPDATE THIS - currently not used
-    def __init__(self, term, vote_granted):
+    def __init__(self, term: int, vote_granted: bool, source_id: str):
         self.term = term
         self.vote_granted = vote_granted
+        self.source_id = source_id
 
     def to_dict(self):
         return {
             'type': 'RequestVoteReply',
             'term': self.term,
-            'vote_granted': self.vote_granted
+            'vote_granted': self.vote_granted,
+            'source_id': self.source_id
         }
 
     @staticmethod
     def from_dict(d):
-        return RequestVoteReply(d['term'], d['vote_granted'])
+        return RequestVoteReply(
+            d['term'], 
+            d['vote_granted'], 
+            d['source_id']
+        )
