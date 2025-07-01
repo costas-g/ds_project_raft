@@ -8,6 +8,7 @@ from raft.rpc.append_entries import AppendEntries, AppendEntriesReply
 from raft.rpc.message import read_message, encode_message, MESSAGE_TYPES
 from raft.entry import Entry
 from raft.command import Command
+from raft.state_machine import StateMachine
 
 class RaftNode:
     def __init__(
@@ -40,8 +41,13 @@ class RaftNode:
         self.next_index: Dict[str, int] = {}     # For each follower, index of next log entry to send (initialized later)
         self.match_index: Dict[str, int] = {}    # For each follower, highest log entry known replicated (initialized later)
 
+        # State Machine
+        self.state_machine = StateMachine()
+
         self.role = 'Follower'
         self.votes_received = set()
+        self.leader_id: str = None
+
         self.election_reset_time = time.time()
         self.heartbeat_interval = heartbeat_interval
         self.election_timeout_min = election_timeout_min
@@ -85,18 +91,21 @@ class RaftNode:
             await asyncio.sleep(0.01)
             now = time.time()
 
-            # Leader routine TODO more?
+            # Leader routine 
             if self.role == 'Leader':
                 # Send periodic heartbeats
                 if now - self.election_reset_time >= self.heartbeat_interval:
                     await self.send_heartbeats()
                     #self.election_reset_time = now
 
-            # Follower+Candidate routine TODO more?
+            # Follower+Candidate routine 
             else:
                 # Start election after timeout
                 if now - self.election_reset_time >= self.election_timeout:
                     await self.start_election()
+
+            # Apply commited entries routine for all
+            self.apply_committed_entries()
 
     async def set_role(self, new_role: str):
         if self.role == 'Leader' and new_role != 'Leader':
@@ -138,7 +147,7 @@ class RaftNode:
             # Create a test command
             key = random.choice(['x', 'y', 'z']) # random key from these
             value = random.choice(range(0,10))  # random value from 0 to 9
-            cmd_name = random.choice(Command.allowed_cmds[:3]) # random allowed command except no-op
+            cmd_name = random.choice(Command.allowed_cmds[1:]+['qwerty', 'asdqwe']) # random commands except no-op
 
             cmd = Command(cmd_name, key, value)
 
@@ -155,6 +164,35 @@ class RaftNode:
             await self.send_heartbeats()
             #self.election_reset_time = time.time()
 
+    def apply_committed_entries(self):
+        start_index = None # for report logging 
+        while self.last_applied < self.commit_index:
+            self.last_applied += 1
+
+            last_applied = self.last_applied
+            cmd = self.state.log[last_applied].command
+            # apply command, save result from return
+            result = self.state_machine.apply(cmd)
+            # print result to console
+            if result:
+                print(result)
+
+            if start_index is None:
+                start_index = self.last_applied
+            # if entry.command is not None:
+            #     try:
+            #         result = self.state_machine.apply(entry.command)
+            #         self.report(f'{self.node_id} applied', index=self.last_applied, command=repr(entry.command), result=result)
+            #     except Exception as e:
+            #         self.report(f'{self.node_id} apply_failed', error=str(e), index=self.last_applied)
+        if start_index is not None:
+            end_index = self.last_applied
+            count = end_index - start_index + 1
+            entries_str = 'entry'
+            if count > 1:
+                entries_str = 'entries'
+            self.report(f'{self.role} {self.node_id} applied_batch of {count} {entries_str} to the SM')#, start=start_index, end=end_index, count=count)
+            
     async def replicate_log_to_peer(self, peer_id):
         next_idx = self.next_index.get(peer_id, 0)
         prev_log_index = next_idx - 1
@@ -364,6 +402,8 @@ class RaftNode:
         # Reset election timeout on valid AppendEntries
         self.election_reset_time = time.time()
         self.role = 'Follower'  # Always follower on AppendEntries from leader
+        # update leader_id to redirect clients
+        self.leader_id = leader_id
 
         # 2. Reply false if log doesn’t contain entry at prevLogIndex with matching term
         if prev_log_index >= 0:
