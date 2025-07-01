@@ -58,19 +58,3 @@ class AppendEntriesReply:
             d['last_log_index'],
             d['source_id']
         )
-
-# class AppendEntriesReply:
-#     def __init__(self, term: int, success: bool, ):
-#         self.term = term
-#         self.success = success
-
-#     def to_dict(self):
-#         return {
-#             'type': 'AppendEntriesReply',
-#             'term': self.term,
-#             'success': self.success
-#         }
-
-#     @staticmethod
-#     def from_dict(d):
-#         return AppendEntriesReply(d['term'], d['success'])
