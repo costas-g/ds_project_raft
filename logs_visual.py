@@ -21,17 +21,28 @@ def load_logs():
             continue
     return logs
 
-def print_logs(logs):
+def print_logs(logs, window_size: int):
     # Determine max log length
     max_len = max((len(log) for log in logs.values()), default=0)
+    #window_size = 20
+
+    # Calculate start index to slice logs, so we show last 20 entries of the longest log
+    start_index = max(0, max_len - window_size)
 
     # Header with indexes
-    header = '--i-' + ''.join(f'-{i:03}-' for i in range(max_len))
+    header = '--i-' + ''.join(f'-{i:03}-' for i in range(start_index, max_len))
     print(header)
 
     for node_id in sorted(logs.keys()):
         row = f'[{node_id}]'
-        row += ''.join(f'-{term:03}-' for term in logs[node_id])
+
+        log_slice = logs[node_id][start_index:] if len(logs[node_id]) > start_index else []
+        # Pad with empty spaces if log shorter than start_index
+        padding = window_size - len(log_slice)
+        row += ''.join(f'-{term:03}-' for term in log_slice)
+        row += '-' * 5 * padding  # 5 chars per entry like '-000-'
+        
+        #row += ''.join(f'-{term:03}-' for term in logs[node_id])
 
         print(row)
 
@@ -50,15 +61,24 @@ def print_logs(logs):
         print(f'[{node_id}] current_term = {current_term}')
 
 
-def monitor_logs():
+def monitor_logs(window_size: int):
     try:
         while True:
             os.system('cls' if os.name == 'nt' else 'clear')
             logs = load_logs()
-            print_logs(logs)
+            print_logs(logs, window_size)
             time.sleep(REFRESH_INTERVAL)
     except KeyboardInterrupt:
         pass
 
 if __name__ == '__main__':
-    monitor_logs()
+    import sys
+    if len(sys.argv) > 2:
+        print("Usage: python logs_visual.py <window_size>")
+        exit(1)
+    elif len(sys.argv) == 2:
+        window_size = int(sys.argv[1])
+    else:
+        window_size = 10
+
+    monitor_logs(window_size)
