@@ -18,6 +18,7 @@ class RaftNode:
         address_book,
         client_port,
         event_callback,
+        batching_interval,
         heartbeat_interval,
         election_timeout_min,
         election_timeout_max,
@@ -52,6 +53,7 @@ class RaftNode:
         self.votes_received = set()
 
         self.election_reset_time = time.time()
+        self.batching_interval = batching_interval
         self.heartbeat_interval = heartbeat_interval
         self.election_timeout_min = election_timeout_min
         self.election_timeout_max = election_timeout_max
@@ -94,6 +96,7 @@ class RaftNode:
 
     async def ticker(self):
         # Periodic task that triggers elections or heartbeats depending on role
+        prev_log_len = len(self.state.log)
         while True:
             await asyncio.sleep(0.01)
             now = time.time()
@@ -102,9 +105,13 @@ class RaftNode:
             if self.role == 'Leader':
                 # Send periodic heartbeats
                 if now - self.election_reset_time >= self.heartbeat_interval:
-                    await self.send_heartbeats()
-                    #self.election_reset_time = now
+                    await self.send_heartbeats() # election reset time gets reset in the send_heartbeats method
 
+                # Send batches of entries if log has increased in length (i.e. if new commands from clients)
+                if now - self.election_reset_time >= self.batching_interval:
+                    if len(self.state.log) > prev_log_len:
+                        await self.send_heartbeats()
+                prev_log_len = len(self.state.log)
             # Follower+Candidate routine 
             else:
                 # Start election after timeout
@@ -177,7 +184,8 @@ class RaftNode:
         
         try:
             request = ClientRequest.from_dict(message)
-            print(f'debug: received command from {request.client_id}: {request.command.to_dict()}')
+            print(f'debug: received command from {request.client_id}: {' '.join(str(v) for v in request.command.to_dict().values())}')
+            self.report(f'{self.role} {self.node_id} received command from client {request.client_id}: {' '.join(str(v) for v in request.command.to_dict().values())}')#{request.command.to_dict()}')
         except Exception as e:
             response = ClientRequestResponse(
                 command_id=None,
@@ -213,6 +221,9 @@ class RaftNode:
         )
         self.state.log.append(entry)
         self.state.save()
+
+        # send heartbeats immediately upon receiving client command - or wait for batching them
+        # await self.send_heartbeats()
 
         log_index = len(self.state.log) - 1
 
@@ -451,6 +462,11 @@ class RaftNode:
         entries_data = message['entries'] # type: Dict
         leader_commit: int = message['leader_commit']
 
+        if entries_data:
+            self.report(f'{self.role} {self.node_id} AppendEntries_RPC_received from Leader {leader_id}', term=term)
+        else:
+            self.report(f'{self.role} {self.node_id} heartbeat_received from Leader {leader_id}', term=term)
+
         # helper function to streamline return points and avoid code duplication
         def reply():
             reply = AppendEntriesReply(
@@ -571,7 +587,13 @@ class RaftNode:
                 commit_index=self.commit_index
             )
         else:
-            self.report(f'{self.role} {self.node_id} heartbeat_received from Leader {leader_id}', commit_index=self.commit_index)
+            self.report(f'{self.role} {self.node_id} heartbeat_processed', 
+                success=success, 
+                reason = reason, 
+                term=self.state.current_term, 
+                log_length=len(self.state.log), 
+                commit_index=self.commit_index
+            )
         
         return reply()
 

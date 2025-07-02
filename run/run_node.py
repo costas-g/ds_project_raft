@@ -57,6 +57,7 @@ async def main(node_id):
         config.addresses,
         client_port=config.client_ports[node_id],
         event_callback=event_logger,
+        batching_interval=timing["batching_interval"],
         heartbeat_interval=timing["heartbeat_interval"],
         election_timeout_min=timing["election_timeout_min"],
         election_timeout_max=timing["election_timeout_max"],

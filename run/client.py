@@ -68,7 +68,7 @@ async def main(client_id):
     print("Type commands to send:")
     while True:
         try:
-            command_str = input(f"({client.client_id} to {client.current_node})[CMD_ID: {client.next_command_id+1}]>>> ").strip()
+            command_str = input(f"({client.client_id} to {client.current_node})[CMD_ID: {client.next_command_id}]>>> ").strip()
             cmd_type = None
             key = None
             val = None
