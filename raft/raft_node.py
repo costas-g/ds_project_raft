@@ -89,7 +89,7 @@ class RaftNode:
         for task in self.tasks:
             task.cancel()
         await asyncio.gather(*self.tasks, return_exceptions=True)
-        self.tasks.clear()            
+        self.tasks.clear()
         print('shut down cleanly')
 
     async def ticker(self):
