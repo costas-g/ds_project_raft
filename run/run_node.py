@@ -3,22 +3,26 @@ import json
 import os
 import logging
 from raft.raft_node import RaftNode
+import run.cluster_config as config
 
-def load_config():
-    # Load cluster config file and validate timing parameters
-    with open(os.path.join(os.path.dirname(__file__), 'cluster_config_3.json')) as f:
-        config = json.load(f)
+def validate_config():
+    required_timing_keys = ["heartbeat_interval", "election_timeout_min", "election_timeout_max"]
 
-    timing = config.get("timing")
-    if timing is None:
+    if not hasattr(config, "timing"):
         raise RuntimeError("Missing 'timing' section in config")
 
-    required_keys = ["heartbeat_interval", "election_timeout_min", "election_timeout_max"]
-    for key in required_keys:
-        if key not in timing:
+    for key in required_timing_keys:
+        if key not in config.timing:
             raise RuntimeError(f"Missing timing parameter: {key}")
 
-    return config
+    if not hasattr(config, "nodes") or not config.nodes:
+        raise RuntimeError("No nodes defined in config")
+
+    if not hasattr(config, "addresses"):
+        raise RuntimeError("Missing 'addresses' in config")
+
+    if not hasattr(config, "client_ports"):
+        raise RuntimeError("Missing 'client_ports' in config")
 
 def setup_logger(node_id):
     # Setup per-node logger writing to logs/<node_id>.log
@@ -38,10 +42,10 @@ def event_logger(node_id, event, data):
     logger.info(msg)
 
 async def main(node_id):
-    # Load config and start node event loop
-    config = load_config()
-    peers = [n for n in config["nodes"] if n != node_id]
-    timing = config["timing"]
+    # Validate config and start node event loop
+    validate_config()
+    peers = [n for n in config.nodes if n != node_id]
+    timing = config.timing
 
     # Setup logger FIRST, so it exists before any logging
     logger = setup_logger(node_id)
@@ -50,7 +54,8 @@ async def main(node_id):
     node = RaftNode(
         node_id,
         peers,
-        config["addresses"],
+        config.addresses,
+        client_port=config.client_ports[node_id],
         event_callback=event_logger,
         heartbeat_interval=timing["heartbeat_interval"],
         election_timeout_min=timing["election_timeout_min"],
@@ -73,6 +78,10 @@ if __name__ == "__main__":
         print("Usage: python run_node.py <node_id>")
         exit(1)
     node_id = sys.argv[1]
+
+    if node_id not in config.nodes:
+        print(f"Error: node_id '{node_id}' not found in config.nodes")
+        exit(1)
 
     try:
         asyncio.run(main(node_id))

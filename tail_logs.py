@@ -3,9 +3,10 @@ import heapq
 import re
 from pathlib import Path
 import json
+import run.cluster_config as config
 
 LOG_DIR = Path("logs")
-CONFIG_FILE = Path("run/cluster_config_3.json")
+#CONFIG_FILE = Path("run/cluster_config_3.json")
 #LOG_FILES = [LOG_DIR / f"n{i}.log" for i in range(1, 4)]
 # Adjust the list if your logs differ
 
@@ -54,8 +55,8 @@ def tail_files(files):
 
 if __name__ == "__main__":
     # Load config and build log file list dynamically
-    with open(CONFIG_FILE) as f:
-        config = json.load(f)
-    nodes = config.get("nodes", [])
+    # with open(CONFIG_FILE) as f:
+    #     config = json.load(f)
+    nodes = config.nodes
     LOG_FILES = [LOG_DIR / f"{node}.log" for node in nodes]
     tail_files(LOG_FILES)
