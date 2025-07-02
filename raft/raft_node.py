@@ -3,9 +3,9 @@ import time
 import random
 from typing import Set, List, Dict
 from raft.raft_state import RaftState
-from raft.rpc.request_vote import RequestVote, RequestVoteReply
-from raft.rpc.append_entries import AppendEntries, AppendEntriesReply
-from raft.rpc.message import read_message, encode_message, MESSAGE_TYPES
+from raft.messages.request_vote import RequestVote, RequestVoteReply
+from raft.messages.append_entries import AppendEntries, AppendEntriesReply
+from raft.messages.message import read_message, encode_message, MESSAGE_TYPES
 from raft.entry import Entry
 from raft.command import Command
 from raft.state_machine import StateMachine
@@ -172,8 +172,8 @@ class RaftNode:
             #self.election_reset_time = time.time()
 
     async def handle_client_message(self, message):#, writer):
-        from raft.rpc.client_request import ClientRequest
-        from raft.rpc.client_request import ClientRequestResponse
+        from raft.messages.client_request import ClientRequest
+        from raft.messages.client_request import ClientRequestResponse
         
         try:
             request = ClientRequest.from_dict(message)
