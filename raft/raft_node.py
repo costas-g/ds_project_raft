@@ -16,6 +16,7 @@ class RaftNode:
         node_id: str,
         peers: List[str],
         address_book,
+        client_port,
         event_callback,
         heartbeat_interval,
         election_timeout_min,
@@ -24,6 +25,9 @@ class RaftNode:
         self.node_id = node_id
         self.peers = peers
         self.address_book = address_book
+        self.leader_id: str = None
+        self.client_port = client_port
+        self.pending_client_responses: Dict[int, asyncio.Future] = {}
 
         # Persistent State
         self.state = RaftState(node_id)
@@ -46,7 +50,6 @@ class RaftNode:
 
         self.role = 'Follower'
         self.votes_received = set()
-        self.leader_id: str = None
 
         self.election_reset_time = time.time()
         self.heartbeat_interval = heartbeat_interval
@@ -76,6 +79,10 @@ class RaftNode:
         server_task = asyncio.create_task(self.run_server())
         ticker_task = asyncio.create_task(self.ticker())
         self.tasks.update({server_task, ticker_task})
+
+        # Start long-running client server task 
+        client_server_task = asyncio.create_task(self.start_client_server())
+        self.tasks.add(client_server_task)
 
     async def stop(self):
         # Cancel all running tasks cleanly on shutdown
@@ -164,6 +171,76 @@ class RaftNode:
             await self.send_heartbeats()
             #self.election_reset_time = time.time()
 
+    async def handle_client_message(self, message):#, writer):
+        from raft.rpc.client_request import ClientRequest
+        from raft.rpc.client_request import ClientRequestResponse
+        
+        try:
+            request = ClientRequest.from_dict(message)
+            print(f'debug: received command from {request.client_id}: {request.command.to_dict()}')
+        except Exception as e:
+            response = ClientRequestResponse(
+                command_id=None,
+                from_leader=True,  # We're replying, so we're the leader (even if not real)
+                result=None,
+                leader_id = self.leader_id,
+                reply_message="Invalid request format",
+                source_id=self.node_id
+            ).to_dict()
+            # writer.write(encode_message(response.to_dict()))
+            # await writer.drain()
+            return response
+
+        if self.role != "Leader":
+            # Redirect client to known leader (if any)
+            response = ClientRequestResponse(
+                command_id=request.command_id,
+                from_leader=False,
+                result=None,
+                leader_id=self.leader_id,
+                reply_message=f"Not leader. Try contacting {self.leader_id}",
+                source_id=self.node_id
+            ).to_dict()
+            # writer.write(encode_message(response.to_dict()))
+            # await writer.drain()
+            return response
+
+        # We are the leader, append command to log
+        entry = Entry(
+            term=self.state.current_term,
+            command_id=request.command_id,
+            command=request.command
+        )
+        self.state.log.append(entry)
+        self.state.save()
+
+        log_index = len(self.state.log) - 1
+
+        # Register a future to wait for commit
+        future = asyncio.Future()
+        self.pending_client_responses[log_index] = future
+
+        # Wait for commit or timeout
+        try:
+            result = await asyncio.wait_for(future, timeout=3.0)
+            reply_message = "Command successfuly applied"
+        except asyncio.TimeoutError:
+            self.pending_client_responses.pop(log_index, None)
+            result = "Request timed out from server".upper()
+            reply_message = "Request timed out before commit"
+
+        response = ClientRequestResponse(
+            command_id=request.command_id,
+            from_leader=True,
+            result=result,
+            leader_id=self.leader_id,
+            reply_message=reply_message,
+            source_id=self.node_id
+        ).to_dict()
+        # writer.write(encode_message(response.to_dict()))
+        # await writer.drain()
+        return response
+
     def apply_committed_entries(self):
         start_index = None # for report logging 
         while self.last_applied < self.commit_index:
@@ -176,15 +253,15 @@ class RaftNode:
             # print result to console
             if result:
                 print(result)
+            
+            # Notify client if pending
+            fut = self.pending_client_responses.pop(self.last_applied, None)
+            if fut and not fut.done():
+                fut.set_result(result)
 
             if start_index is None:
                 start_index = self.last_applied
-            # if entry.command is not None:
-            #     try:
-            #         result = self.state_machine.apply(entry.command)
-            #         self.report(f'{self.node_id} applied', index=self.last_applied, command=repr(entry.command), result=result)
-            #     except Exception as e:
-            #         self.report(f'{self.node_id} apply_failed', error=str(e), index=self.last_applied)
+
         if start_index is not None:
             end_index = self.last_applied
             count = end_index - start_index + 1
@@ -289,7 +366,7 @@ class RaftNode:
                 if len(self.votes_received) > (len(self.peers) + 1) // 2:
                     # become Leader
                     self.role = 'Leader'
-
+                    self.leader_id = self.node_id
                     self.report(f'{self.role} {self.node_id} became_leader', term=self.state.current_term)
 
                     # Initialize nextIndex for each follower to leader’s last log index + 1
@@ -317,10 +394,10 @@ class RaftNode:
                         except asyncio.CancelledError:
                             pass
                     
-                    # create a new period test command task
-                    self.test_command_task = asyncio.create_task(self.periodic_test_commands())
-                    self.tasks.add(self.test_command_task)
-                    self.test_command_task.add_done_callback(self.tasks.discard)
+                    # # create a new period test command task
+                    # self.test_command_task = asyncio.create_task(self.periodic_test_commands())
+                    # self.tasks.add(self.test_command_task)
+                    # self.test_command_task.add_done_callback(self.tasks.discard)
 
         elif msg_type == 'AppendEntries':
             reply = self.handle_append_entries(message)
@@ -522,6 +599,30 @@ class RaftNode:
             self.report(f'{self.role} {self.node_id} server_started', host=host, port=port)
             await server.serve_forever()
 
+    async def start_client_server(self):
+        # TCP server that listens for incoming messages from clients
+        host, _ = self.address_book[self.node_id].split(':')
+        port = self.client_port
+        server = await asyncio.start_server(self.handle_client_connection, host, int(port))
+
+        async with server:
+            self.report(f'{self.role} {self.node_id} client_server_started', host=host, port=port)
+            await server.serve_forever()
+        
+    async def handle_client_connection(self, reader, writer):
+        # Handle an incoming connection, read and respond to messages
+        try:
+            message = await read_message(reader)
+            response = await self.handle_client_message(message)
+            if response:
+                writer.write(encode_message(response))
+                await writer.drain()
+        except Exception as e:
+            self.report(f'{self.node_id} client_connection_error', error=str(e))
+        finally:
+            writer.close()
+            await writer.wait_closed()
+
     async def handle_connection(self, reader, writer):
         # Handle an incoming connection, read and respond to messages
         try:
@@ -531,6 +632,8 @@ class RaftNode:
                 if response:
                     writer.write(encode_message(response))
                     await writer.drain()
+        # except Exception as e:
+        #     self.report(f'{self.node_id} connection_error', error=str(e))
         except (asyncio.IncompleteReadError, ConnectionResetError):
             pass
         finally:
