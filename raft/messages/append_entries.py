@@ -35,11 +35,13 @@ class AppendEntries:
         return AppendEntries(d['term'], d['leader_id'], d['prev_log_index'], d['prev_log_term'], entries, d['leader_commit'])
 
 class AppendEntriesReply:
-    def __init__(self, term: int, success: bool, last_log_index: int, source_id: str):
+    def __init__(self, term: int, success: bool, last_log_index: int, source_id: str, conflict_term: int = None, conflict_term_first_index: int = None):
         self.term = term
         self.success = success
         self.last_log_index = last_log_index
         self.source_id = source_id
+        self.conflict_term = conflict_term
+        self.conflict_term_first_index = conflict_term_first_index
 
     def to_dict(self):
         return {
@@ -47,7 +49,9 @@ class AppendEntriesReply:
             'term': self.term,
             'success': self.success,
             'last_log_index': self.last_log_index,
-            'source_id': self.source_id
+            'source_id': self.source_id,
+            'conflict_term': self.conflict_term,
+            'conflict_term_first_index': self.conflict_term_first_index
         }
 
     @staticmethod
@@ -56,5 +60,7 @@ class AppendEntriesReply:
             d['term'],
             d['success'],
             d['last_log_index'],
-            d['source_id']
+            d['source_id'],
+            d['conflict_term'],
+            d['conflict_term_first_index'],
         )

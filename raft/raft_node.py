@@ -86,13 +86,16 @@ class RaftNode:
         client_server_task = asyncio.create_task(self.start_client_server())
         self.tasks.add(client_server_task)
 
+        print('Server started')
+
     async def stop(self):
         # Cancel all running tasks cleanly on shutdown
         for task in self.tasks:
             task.cancel()
         await asyncio.gather(*self.tasks, return_exceptions=True)
         self.tasks.clear()
-        print('shut down cleanly')
+
+        print('Shut down cleanly')
 
     async def ticker(self):
         # Periodic task that triggers elections or heartbeats depending on role
@@ -184,7 +187,7 @@ class RaftNode:
         
         try:
             request = ClientRequest.from_dict(message)
-            print(f'debug: received command from {request.client_id}: {' '.join(str(v) for v in request.command.to_dict().values())}')
+            print(f'Received command from {request.client_id}: {' '.join(str(v) for v in request.command.to_dict().values())}')
             self.report(f'{self.role} {self.node_id} received command from client {request.client_id}: {' '.join(str(v) for v in request.command.to_dict().values())}')#{request.command.to_dict()}')
         except Exception as e:
             response = ClientRequestResponse(
@@ -234,7 +237,7 @@ class RaftNode:
         # Wait for commit or timeout
         try:
             result = await asyncio.wait_for(future, timeout=3.0)
-            reply_message = "Command successfuly applied"
+            reply_message = "Command committed"
         except asyncio.TimeoutError:
             self.pending_client_responses.pop(log_index, None)
             result = "Request timed out from server".upper()
@@ -262,8 +265,8 @@ class RaftNode:
             # apply command, save result from return
             result = self.state_machine.apply(cmd)
             # print result to console
-            if result:
-                print(result)
+            # if result:
+            #     print(result)
             
             # Notify client if pending
             fut = self.pending_client_responses.pop(self.last_applied, None)
@@ -279,6 +282,7 @@ class RaftNode:
             entries_str = 'entry'
             if count > 1:
                 entries_str = 'entries'
+            print(f'Applied {count} {entries_str}. SM:', self.state_machine.dump())
             self.report(f'{self.role} {self.node_id} applied_batch of {count} {entries_str} to the SM')#, start=start_index, end=end_index, count=count)
             
     async def replicate_log_to_peer(self, peer_id):
@@ -313,6 +317,7 @@ class RaftNode:
         # we always reset election reset time after sending heartbeats/AppendEntries RPCs
         self.election_reset_time = time.time()
 
+        self.report('-------------------------')
         self.report(
             f'{self.role} {self.node_id} heartbeats_sent',
             term=self.state.current_term,
@@ -420,6 +425,9 @@ class RaftNode:
 
             peer_id = message['source_id']
             success = message['success']
+            conflict_term = message['conflict_term']
+            conflict_term_first_index = message['conflict_term_first_index']
+            peer_last_log_index = message['last_log_index']
 
             if success:
                 # 1. Update nextIndex and matchIndex
@@ -447,7 +455,16 @@ class RaftNode:
 
             else:
                 # AppendEntries failed (log inconsistency): decrement nextIndex and retry
-                self.next_index[peer_id] = max(0, self.next_index[peer_id] - 1)
+                # self.next_index[peer_id] = max(0, self.next_index[peer_id] - 1)
+
+                if conflict_term_first_index is not None:
+                    self.next_index[peer_id] = max(0, conflict_term_first_index)
+                else:
+                    if self.next_index[peer_id] > peer_last_log_index + 1:
+                        self.next_index[peer_id] = max(0, peer_last_log_index + 1)
+                    else:
+                        self.next_index[peer_id] = max(0, self.next_index[peer_id] - 1)
+
                 self.report(
                     f'{self.role} {self.node_id} AppendEntries failed: retrying',
                     peer=peer_id,
@@ -462,8 +479,11 @@ class RaftNode:
         entries_data = message['entries'] # type: Dict
         leader_commit: int = message['leader_commit']
 
+        conflict_term = None
+        conflict_term_first_index = None
+
         if entries_data:
-            self.report(f'{self.role} {self.node_id} AppendEntries_RPC_received from Leader {leader_id}', term=term)
+            self.report(f'{self.role} {self.node_id} AppendEntries_RPC_received from Leader {leader_id}', term=term, prev_log_index=prev_log_index)
         else:
             self.report(f'{self.role} {self.node_id} heartbeat_received from Leader {leader_id}', term=term)
 
@@ -473,7 +493,9 @@ class RaftNode:
                 term=self.state.current_term, 
                 success=success, 
                 last_log_index=self.state.get_last_log_index(), 
-                source_id=self.node_id
+                source_id=self.node_id,
+                conflict_term=conflict_term,
+                conflict_term_first_index=conflict_term_first_index
             ).to_dict()
             return reply
 
@@ -482,6 +504,10 @@ class RaftNode:
         if term < self.state.current_term:
             success = False
             reason = 'stale term'
+
+            conflict_term = None
+            conflict_term_first_index = None
+
             self.report(f'{self.role} {self.node_id} AppendEntries_processed', 
                 success=success, 
                 reason = reason, 
@@ -504,6 +530,10 @@ class RaftNode:
                 # Missing entry at prevLogIndex
                 success = False
                 reason = 'no matching entry index'
+
+                conflict_term = None
+                conflict_term_first_index = None
+
                 self.report(f'{self.role} {self.node_id} AppendEntries_processed', 
                     success=success, 
                     reason = reason, 
@@ -518,12 +548,18 @@ class RaftNode:
                 # Exists an entry at prev_log_index but terms mismatch
                 success = False
                 reason = 'terms mismatch'
+
+                conflict_term = self.state.log[prev_log_index].term
+                conflict_term_first_index = self.state.get_term_first_index(conflict_term, prev_log_index)
+
                 self.report(f'{self.role} {self.node_id} AppendEntries_processed', 
                     success=success, 
                     reason = reason, 
                     term=self.state.current_term, 
                     log_length=len(self.state.log), 
-                    commit_index=self.commit_index
+                    commit_index=self.commit_index,
+                    conflict_term = conflict_term,
+                    conflict_term_first_index = conflict_term_first_index
                 )
 
                 return reply()
@@ -577,6 +613,8 @@ class RaftNode:
         # Optionally, apply newly committed entries to state machine here or via separate async task
 
         success = True
+        conflict_term = None
+        conflict_term_first_index = None
 
         if new_entries:
             self.report(f'{self.role} {self.node_id} AppendEntries_processed', 
@@ -594,7 +632,7 @@ class RaftNode:
                 log_length=len(self.state.log), 
                 commit_index=self.commit_index
             )
-        
+
         return reply()
 
     async def send_message(self, peer_id, message):

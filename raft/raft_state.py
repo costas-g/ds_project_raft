@@ -54,3 +54,21 @@ class RaftState:
             return candidate_last_index >= my_last_index
         else:
             return False
+        
+    # helper for backtracking fast   
+    def get_term_first_index(self, term: int, high_index: int = None) -> int | None:
+        '''Returns the first index of the given term in the log using binary search for efficiency'''
+        low = 0
+        high = high_index if high_index is not None else len(self.log) - 1
+        result = None
+        while low <= high:
+            mid = (low + high) // 2
+            mid_term = self.log[mid].term
+            if mid_term == term:
+                result = mid
+                high = mid - 1  # look left for earlier occurrence
+            elif mid_term < term:
+                low = mid + 1
+            else:
+                high = mid - 1
+        return result
