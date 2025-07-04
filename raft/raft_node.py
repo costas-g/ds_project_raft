@@ -106,15 +106,18 @@ class RaftNode:
 
             # Leader routine 
             if self.role == 'Leader':
+                # Send batches of entries if log has increased in length (i.e. if new commands from clients)
+                # This needs to be checked before the empty heartbeats because they have priority over them
+                if now - self.election_reset_time >= self.batching_interval:
+                    if len(self.state.log) > prev_log_len:
+                        await self.send_heartbeats()
+
+                    prev_log_len = len(self.state.log)
+
                 # Send periodic heartbeats
                 if now - self.election_reset_time >= self.heartbeat_interval:
                     await self.send_heartbeats() # election reset time gets reset in the send_heartbeats method
 
-                # Send batches of entries if log has increased in length (i.e. if new commands from clients)
-                if now - self.election_reset_time >= self.batching_interval:
-                    if len(self.state.log) > prev_log_len:
-                        await self.send_heartbeats()
-                prev_log_len = len(self.state.log)
             # Follower+Candidate routine 
             else:
                 # Start election after timeout
@@ -223,6 +226,7 @@ class RaftNode:
             command=request.command
         )
         self.state.log.append(entry)
+        # self.report(f'COMMAND ADDED TO LOG NOW')
         self.state.save()
 
         # send heartbeats immediately upon receiving client command - or wait for batching them
@@ -316,6 +320,7 @@ class RaftNode:
 
         # we always reset election reset time after sending heartbeats/AppendEntries RPCs
         self.election_reset_time = time.time()
+        # self.report(f'TIME RESET')
 
         self.report('-------------------------')
         self.report(

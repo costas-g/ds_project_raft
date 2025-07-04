@@ -7,11 +7,11 @@ nodes = ALL_NODES[:NUM_NODES]
 addresses = {node: f"127.0.0.1:{9000 + i}" for i, node in enumerate(ALL_NODES)}
 client_ports = {node: 9100 + i for i, node in enumerate(ALL_NODES)}
 
-time_scale_factor = 20
+time_scale_factor = 10
 
 timing = {
-    "batching_interval":    time_scale_factor * 0.015,    #0.015
-    "heartbeat_interval":   time_scale_factor * 0.075,    #0.075,
-    "election_timeout_min": time_scale_factor * 0.150,    #0.150,
-    "election_timeout_max": time_scale_factor * 0.300     #0.300
+    "batching_interval":    time_scale_factor * 0.020,    #0.015
+    "heartbeat_interval":   time_scale_factor * 0.100,    #0.075,
+    "election_timeout_min": time_scale_factor * 0.200,    #0.150,
+    "election_timeout_max": time_scale_factor * 0.400     #0.300
 }
