@@ -52,7 +52,10 @@ class RaftNode:
         self.role = 'Follower'
         self.votes_received = set()
 
-        self.election_reset_time = time.time()
+        self.lease_ack_set = set()  # reset every heartbeat round
+        self.last_lease_confirmed_time = None
+
+        self.election_reset_time = time.monotonic()
         self.batching_interval = batching_interval
         self.heartbeat_interval = heartbeat_interval
         self.election_timeout_min = election_timeout_min
@@ -102,7 +105,7 @@ class RaftNode:
         prev_log_len = len(self.state.log)
         while True:
             await asyncio.sleep(0.01)
-            now = time.time()
+            now = time.monotonic()
 
             # Leader routine 
             if self.role == 'Leader':
@@ -146,7 +149,7 @@ class RaftNode:
         self.state.voted_for = self.node_id
         self.state.save()
         self.votes_received = {self.node_id}
-        self.election_reset_time = time.time()
+        self.election_reset_time = time.monotonic()
         self.election_timeout = self.random_timeout()
 
         self.report(f'{self.role} {self.node_id} election_started', term=self.state.current_term)
@@ -219,7 +222,70 @@ class RaftNode:
             # await writer.drain()
             return response
 
-        # We are the leader, append command to log
+        # We are the leader 
+        # 
+        # Check if request command is INVALID and handle it
+        if request.command.cmd_type.lower() not in Command.allowed_cmds[1:]: # if not in all allowed commands except no-op
+            response = ClientRequestResponse(
+                command_id=request.command_id,
+                from_leader=True,
+                result=f'Unknown command: {request.command.cmd_type}',
+                leader_id=self.leader_id,
+                reply_message=f"List of known commands: {Command.allowed_cmds[1:]}",
+                source_id=self.node_id
+            ).to_dict()
+            # writer.write(encode_message(response.to_dict()))
+            # await writer.drain()
+            return response
+
+        # Check if request command is READ 
+        # handle it without appending to log
+        if request.command.cmd_type.lower() == 'read': 
+            # Check if time elapsed since last heartbeats received from majority is old
+            # if old, send heartbeats to confirm leader is recent after heartbeat ACKs from majority
+            # then reply to client read request
+            now = time.monotonic()
+            if self.last_lease_confirmed_time is not None and \
+                (now - self.last_lease_confirmed_time) > self.election_timeout_min / 2: # < lease_duration = election_timeout_min - (max_clock_drift + max_network_delay):
+                # Lease expired - trigger fresh heartbeat round to reestablish leadership
+                await self.send_heartbeats()
+
+                if self.last_lease_confirmed_time is not None and \
+                (now - self.last_lease_confirmed_time) > self.election_timeout_min / 2:
+                    response = ClientRequestResponse(
+                        command_id=request.command_id,
+                        from_leader=True,
+                        result='Failed to read',
+                        leader_id=self.leader_id,
+                        reply_message='Stale leader or lease not confirmed',
+                        source_id=self.node_id
+                    ).to_dict()
+
+                    return response
+
+            # Safe to serve read now
+            key = request.command.key
+            read_value = self.state_machine.get(key)
+            if read_value is not None:
+                result = f"Read {key} = {read_value}"
+                reply_message = 'No append to log'
+            else:
+                result = f"{key} not found for read"
+                reply_message = 'Try a different key'
+            
+            response = ClientRequestResponse(
+                command_id=request.command_id,
+                from_leader=True,
+                result=result,
+                leader_id=self.leader_id,
+                reply_message=reply_message,
+                source_id=self.node_id
+            ).to_dict()
+
+            return response
+        
+
+        # Request command is valid and not READ, append command to log
         entry = Entry(
             term=self.state.current_term,
             command_id=request.command_id,
@@ -319,7 +385,9 @@ class RaftNode:
             task.add_done_callback(self.tasks.discard)
 
         # we always reset election reset time after sending heartbeats/AppendEntries RPCs
-        self.election_reset_time = time.time()
+        # also reset the lease ack set
+        self.election_reset_time = time.monotonic()
+        self.lease_ack_set.clear()
         # self.report(f'TIME RESET')
 
         self.report('-------------------------')
@@ -433,6 +501,11 @@ class RaftNode:
             conflict_term = message['conflict_term']
             conflict_term_first_index = message['conflict_term_first_index']
             peer_last_log_index = message['last_log_index']
+
+            self.lease_ack_set.add(peer_id)
+            if len(self.lease_ack_set) >= len(self.peers) / 2:
+                self.last_lease_confirmed_time = time.monotonic()
+                self.report(f'LEASE REFRESHED')
 
             if success:
                 # 1. Update nextIndex and matchIndex

@@ -1,7 +1,7 @@
 class Command:
     allowed_cmds = ['no-op', 'create', 'read', 'update', 'delete'] 
 
-    def __init__(self, cmd_type, key, value=None):
+    def __init__(self, cmd_type: str, key: str, value=None):
         # if cmd_type not in self.allowed_cmds:
         #     raise ValueError(f"Invalid command type: {cmd_type}")
         self.cmd_type = cmd_type

@@ -16,9 +16,9 @@ class Client:
         self.start_time = 0 # seconds
         self.end_time = 0   # seconds
 
-    async def send_command(self, command_str: Command) -> ClientRequestResponse:
+    async def send_command(self, cmd: Command) -> ClientRequestResponse:
         #self.next_command_id += 1
-        req = ClientRequest(client_id=self.client_id, command_id=self.next_command_id, command=command_str)
+        req = ClientRequest(client_id=self.client_id, command_id=self.next_command_id, command=cmd)
         try:
             MAX_ITER = 5 # max number of times retrying the request
             iterations = 0
