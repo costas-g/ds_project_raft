@@ -12,24 +12,57 @@ class RaftState:
         self.state_dir = 'states'
         os.makedirs(self.state_dir, exist_ok=True)
         self.state_file = os.path.join(self.state_dir, f'state_{node_id}.json')
+        self.log_file = os.path.join(self.state_dir, f'log_{node_id}.ndjson')
         self.load()
 
     def load(self):
+        # Load the state file
         if os.path.exists(self.state_file):
             with open(self.state_file, 'r') as f:
                 data = json.load(f)
                 self.current_term = data.get('current_term', 0)
                 self.voted_for = data.get('voted_for', None)
                 self.log = [Entry.from_dict(e) for e in data.get('log', [])] # self.log = data.get('log', [])
+        
+        # Load the log file
+        if os.path.exists(self.log_file):
+            self.log = []
+            with open(self.log_file, 'r') as f:
+                for line in f:
+                    entry_dict = json.loads(line.strip())
+                    self.log.append(Entry.from_dict(entry_dict))
+                # data = json.load(f)
+                # self.log = [Entry.from_dict(e) for e in data.get('log', [])] # self.log = data.get('log', [])
 
     def save(self):
         data = {
             'current_term': self.current_term,
-            'voted_for': self.voted_for,
-            'log': [e.to_dict() for e in self.log] # 'log': self.log,
+            'voted_for': self.voted_for
+            #'log': [e.to_dict() for e in self.log] # 'log': self.log,
         }
         with open(self.state_file, 'w') as f:
             json.dump(data, f)
+
+    def append_log_entry_to_file(self, entry: Entry):
+        with open(self.log_file, "a") as f:
+            f.write(json.dumps(entry.to_dict()) + "\n")
+
+    def append_log_entries_to_file(self, entries: list[Entry]):
+        with open(self.log_file, "a") as f:
+            for entry in entries:
+                f.write(json.dumps(entry.to_dict()) + "\n")
+
+    def truncate_log(self, index):
+        self.log = self.log[:index]
+        with open(self.log_file, "w") as f:
+            for entry in self.log:
+                f.write(json.dumps(entry.to_dict()) + "\n")
+    
+    def rewrite_log(self, new_entries: List[Entry]):
+        self.log = new_entries
+        with open(self.log_file, "w") as f:
+            for entry in new_entries:
+                f.write(json.dumps(entry.to_dict()) + "\n")
 
     # helper methods for granting votes
     def get_last_log_index(self):

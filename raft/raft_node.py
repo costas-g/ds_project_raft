@@ -180,6 +180,7 @@ class RaftNode:
             # Append entry to log
             self.state.log.append(entry)
             self.state.save()
+            self.state.append_log_entry_to_file(entry)
 
             self.report(f'{self.role} {self.node_id} appended_test_command', command=repr(cmd))
 
@@ -294,6 +295,7 @@ class RaftNode:
         self.state.log.append(entry)
         # self.report(f'COMMAND ADDED TO LOG NOW')
         self.state.save()
+        self.state.append_log_entry_to_file(entry)
 
         # send heartbeats immediately upon receiving client command - or wait for batching them
         # await self.send_heartbeats()
@@ -306,7 +308,7 @@ class RaftNode:
 
         # Wait for commit or timeout
         try:
-            result = await asyncio.wait_for(future, timeout=3.0)
+            result = await asyncio.wait_for(future, timeout=10.0)
             reply_message = "Command committed"
         except asyncio.TimeoutError:
             self.pending_client_responses.pop(log_index, None)
@@ -468,6 +470,7 @@ class RaftNode:
                     no_op_entry = Entry(self.state.current_term, command_id=None, command=Command('no-op', key=None))
                     self.state.log.append(no_op_entry)
                     self.state.save()
+                    self.state.append_log_entry_to_file(no_op_entry)
 
                     self.report(f'{self.role} {self.node_id} appended_no_op_command')
 
@@ -682,6 +685,7 @@ class RaftNode:
         self.report(f'{self.role} {self.node_id} appending {len(new_entries[start:])} entries to my log', len_new_entries=len(new_entries), start_index=start)
         self.state.log.extend(new_entries[start:]) # mass Append happens here
         self.state.save()
+        self.state.append_log_entries_to_file(new_entries[start:])
 
         # Rule 5: Update commitIndex if leaderCommit > commitIndex
         if leader_commit > self.commit_index:

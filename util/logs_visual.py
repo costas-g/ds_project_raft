@@ -8,14 +8,21 @@ REFRESH_INTERVAL = 1.0  # seconds
 def load_logs():
     logs = {}
     for fname in sorted(os.listdir(STATE_DIR)):
-        if not fname.startswith('state_') or not fname.endswith('.json'):
+        if not fname.startswith('log_') or not fname.endswith('.ndjson'):
             continue
-        node_id = fname.replace('state_', '').replace('.json', '')
+        node_id = fname.replace('log_', '').replace('.ndjson', '')
+        log_terms = []
         try:
             with open(os.path.join(STATE_DIR, fname), 'r') as f:
-                data = json.load(f)
-                log_terms = [entry['term'] for entry in data.get('log', [])]
-                logs[node_id] = log_terms
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    entry = json.loads(line)
+                    term = entry.get('term')
+                    if term is not None:
+                        log_terms.append(term)
+            logs[node_id] = log_terms
         except: # (json.JSONDecodeError, OSError):
             # Skip this file this cycle if it's currently being written
             continue
@@ -30,7 +37,7 @@ def print_logs(logs, window_size: int):
     start_index = max(0, max_len - window_size)
 
     # Header with indexes
-    header = '--i-' + ''.join(f'-{i:03}-' for i in range(start_index, max_len))
+    header = '--i-' + ''.join(f'-{i:04}-' for i in range(start_index, max_len))
     print(header)
 
     for node_id in sorted(logs.keys()):
@@ -39,8 +46,8 @@ def print_logs(logs, window_size: int):
         log_slice = logs[node_id][start_index:] if len(logs[node_id]) > start_index else []
         # Pad with empty spaces if log shorter than start_index
         padding = window_size - len(log_slice)
-        row += ''.join(f'-{term:03}-' for term in log_slice)
-        row += '-' * 5 * padding  # 5 chars per entry like '-000-'
+        row += ''.join(f'-{term:04}-' for term in log_slice)
+        row += '-' * 6 * padding  # 6 chars per entry like '-0000-'
         
         #row += ''.join(f'-{term:03}-' for term in logs[node_id])
 
