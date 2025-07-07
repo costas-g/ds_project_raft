@@ -12,7 +12,7 @@ class Client:
         self.current_node_index: int = random.choice(range(NUM_NODES))
         self.current_node = nodes[self.current_node_index]
         self.next_command_id = 0
-        self.timeout = 10    # seconds
+        self.timeout = 2    # seconds
         self.start_time = 0 # seconds
         self.end_time = 0   # seconds
 
@@ -29,7 +29,7 @@ class Client:
 
                 if response.from_leader:
                     #self.next_command_id += 1
-                    iterations and print()
+                    # iterations and print()
                     return response#.result
                 elif response.leader_id:
                     self.current_node = response.leader_id
@@ -37,7 +37,7 @@ class Client:
 
                     if response:
                         #self.next_command_id += 1
-                        iterations and print()
+                        # iterations and print()
                         return response#.result
                     else:
                         self.current_node_index = random.choice([x for x in range(0, NUM_NODES) if x != self.current_node_index])
@@ -50,20 +50,20 @@ class Client:
                     # print(f'debug: Not leader and no redirect. Changing to node {self.current_node}.')
                     #return ClientRequestResponse(None, None, None, None, "Not leader and no redirect. Changing to a new random node.", None)
 
-                print('.', end='', flush=True)#f'try {iterations}')
+                # print('.', end='', flush=True)#f'try {iterations}')
                 iterations += 1
+                iterations > 4 and print('failed on retry', iterations)
 
-            iterations and print()
+            # iterations and print()
 
-            # Calculate latency when no response
-            self.end_time = time.perf_counter()
-            latency_ms = (self.end_time - self.start_time) * 1000
-            print(f"[Latency] {latency_ms:.4f} ms")  # or log to a file
-            
-            return ClientRequestResponse(self.next_command_id, True, None, None, f"Tried to connect {iterations} times, no response, stop trying.", None)
+            # # Calculate latency when no response
+            # self.end_time = time.perf_counter()
+            # latency_ms = (self.end_time - self.start_time) * 1000
+            # print(f"[Latency] {latency_ms:.4f} ms")  # or log to a file
+            return ClientRequestResponse(self.next_command_id, False, None, None, f"Tried to connect {iterations} times, no response, stop trying.", None)
         except asyncio.TimeoutError:
-            iterations and print()
-            return ClientRequestResponse(self.next_command_id, True, None, None, "Request timed out", None)
+            # iterations and print()
+            return ClientRequestResponse(self.next_command_id, False, None, None, "Request timed out", None)
 
     async def _send_to_node(self, node_id, request: ClientRequest) -> ClientRequestResponse:
         host = addresses[node_id].split(':')[0]
@@ -84,5 +84,5 @@ class Client:
 
             return ClientRequestResponse.from_dict(msg)
         except Exception as e:
-            print(f'debug: Exception: {e}')
+            # print(f'[cmd_id: {request.command_id}] debug: Exception: {e}')
             return ClientRequestResponse(request.command_id, False, 'exception', None, 'excepcion', None)

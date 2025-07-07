@@ -5,12 +5,17 @@ from typing import Set, List, Dict
 from raft.raft_state import RaftState
 from raft.messages.request_vote import RequestVote, RequestVoteReply
 from raft.messages.append_entries import AppendEntries, AppendEntriesReply
+from raft.messages.client_request import ClientRequest, ClientRequestResponse
 from raft.messages.install_snapshot import InstallSnapshot, InstallSnapshotReply
 from raft.messages.message import read_message, encode_message, MESSAGE_TYPES
 from raft.entry import Entry
 from raft.command import Command
 from raft.state_machine import StateMachine
 from raft.snapshot import Snapshot
+
+print_out = False       # for controlling print statements
+CLOCK_PERIOD = 0.001    # for ticker
+MAX_LOG = 200           # maximum local log length
 
 class RaftNode:
     def __init__(
@@ -64,7 +69,7 @@ class RaftNode:
         self.last_applied: int = self.state.snapshot.last_included_index   # Index of highest log entry applied to state machine (increases monotonically)
 
         # Snapshot related attributes
-        self.snapshot_threshold: int = 100  # create snapshot every 100 applied entries
+        self.snapshot_threshold: int = MAX_LOG  # create snapshot every X applied entries
         
         # Lease for read commands
         self.lease_ack_set = set()  # reset every heartbeat round
@@ -72,6 +77,7 @@ class RaftNode:
 
         # Timing attributes
         self.election_reset_time = time.monotonic()
+        self.heartbeat_reset_time = time.monotonic()
         self.batching_interval = batching_interval
         self.heartbeat_interval = heartbeat_interval
         self.election_timeout_min = election_timeout_min
@@ -83,21 +89,21 @@ class RaftNode:
         
         # Keep track of all running asyncio tasks to manage lifecycle cleanly
         self.tasks: Set[asyncio.Task] = set()
-        # For adding test commands to the log by the leader (no client)
-        self.test_command_task = None
+        # # For adding test commands to the log by the leader (no client)
+        # self.test_command_task = None
 
 
     def random_timeout(self):
-        # Generate a random election timeout between min and max
+        '''Generate a random election timeout between min and max'''
         return random.uniform(self.election_timeout_min, self.election_timeout_max)
 
     def report(self, event, **kwargs):
-        # Report an event to the callback if provided
+        '''Report an event to the callback if provided'''
         if self.event_callback:
             self.event_callback(self.node_id, event, kwargs)
 
     async def start(self):
-        # Start long-running server and ticker tasks and keep references
+        '''Start long-running server and ticker tasks and keep references'''
         server_task = asyncio.create_task(self.run_server())
         ticker_task = asyncio.create_task(self.ticker())
         self.tasks.update({server_task, ticker_task})
@@ -109,7 +115,7 @@ class RaftNode:
         print('Server started')
 
     async def stop(self):
-        # Cancel all running tasks cleanly on shutdown
+        '''Cancel all running tasks cleanly on shutdown'''
         for task in self.tasks:
             task.cancel()
         await asyncio.gather(*self.tasks, return_exceptions=True)
@@ -118,25 +124,25 @@ class RaftNode:
         print('Shut down cleanly')
 
     async def ticker(self):
-        # Periodic task that triggers elections or heartbeats depending on role
+        '''Periodic task that triggers elections or heartbeats depending on role'''
         prev_last_log_index = self.state.get_last_log_index() # initialization
         while True:
-            await asyncio.sleep(0.01)
+            await asyncio.sleep(CLOCK_PERIOD)
             now = time.monotonic()
 
             # Leader routine 
             if self.role == 'Leader':
                 # Send batches of entries if last_log_index has been advanced (i.e. if new commands from clients)
                 # This needs to be checked before the empty heartbeats because they have priority over them
-                if now - self.election_reset_time >= self.batching_interval:
+                if now - self.heartbeat_reset_time >= self.batching_interval:
                     if self.state.get_last_log_index() > prev_last_log_index:
                         await self.send_heartbeats()
 
                     prev_last_log_index = self.state.get_last_log_index()
 
                 # Send periodic heartbeats
-                if now - self.election_reset_time >= self.heartbeat_interval:
-                    await self.send_heartbeats() # election reset time gets reset in the send_heartbeats method
+                if now - self.heartbeat_reset_time >= self.heartbeat_interval:
+                    await self.send_heartbeats() # heartbeat timer gets reset in the send_heartbeats method
 
             # Follower+Candidate routine 
             else:
@@ -149,14 +155,15 @@ class RaftNode:
 
     async def set_role(self, new_role: str):
         if self.role == 'Leader' and new_role != 'Leader':
-            # Cancel test command task on stepping down
-            if self.test_command_task:
-                self.test_command_task.cancel()
-                try:
-                    await self.test_command_task
-                except asyncio.CancelledError:
-                    pass
-                self.test_command_task = None
+            pass
+            # # Cancel test command task on stepping down
+            # if self.test_command_task:
+            #     self.test_command_task.cancel()
+            #     try:
+            #         await self.test_command_task
+            #     except asyncio.CancelledError:
+            #         pass
+            #     self.test_command_task = None
         self.role = new_role
 
     async def start_election(self):
@@ -166,8 +173,7 @@ class RaftNode:
         self.state.voted_for = self.node_id
         self.state.save()
         self.votes_received = {self.node_id}
-        self.election_reset_time = time.monotonic()
-        self.election_timeout = self.random_timeout()
+        self.reset_election_timer()
 
         self.report(f'{self.role} {self.node_id} election_started', term=self.state.current_term)
 
@@ -203,15 +209,11 @@ class RaftNode:
 
             # Trigger immediate replication to peers
             await self.send_heartbeats()
-            #self.election_reset_time = time.monotonic()
 
     async def handle_client_message(self, message):#, writer):
-        from raft.messages.client_request import ClientRequest
-        from raft.messages.client_request import ClientRequestResponse
-        
         try:
             request = ClientRequest.from_dict(message)
-            print(f'Received command from {request.client_id}: {' '.join(str(v) for v in request.command.to_dict().values())}')
+            print_out and print(f'Received command from {request.client_id}: {' '.join(str(v) for v in request.command.to_dict().values())}')
             self.report(f'{self.role} {self.node_id} received command from client {request.client_id}: {' '.join(str(v) for v in request.command.to_dict().values())}')#{request.command.to_dict()}')
         except Exception as e:
             response = ClientRequestResponse(
@@ -222,8 +224,6 @@ class RaftNode:
                 reply_message="Invalid request format",
                 source_id=self.node_id
             ).to_dict()
-            # writer.write(encode_message(response.to_dict()))
-            # await writer.drain()
             return response
 
         if self.role != "Leader":
@@ -236,8 +236,6 @@ class RaftNode:
                 reply_message=f"Not leader. Try contacting {self.leader_id}",
                 source_id=self.node_id
             ).to_dict()
-            # writer.write(encode_message(response.to_dict()))
-            # await writer.drain()
             return response
 
         # We are the leader 
@@ -252,8 +250,6 @@ class RaftNode:
                 reply_message=f"List of known commands: {Command.allowed_cmds[1:]}",
                 source_id=self.node_id
             ).to_dict()
-            # writer.write(encode_message(response.to_dict()))
-            # await writer.drain()
             return response
 
         # Check if request command is READ 
@@ -264,7 +260,7 @@ class RaftNode:
             # then reply to client read request
             now = time.monotonic()
             if self.last_lease_confirmed_time is not None and \
-                (now - self.election_reset_time) > self.batching_interval and \
+                (now - self.heartbeat_reset_time) > self.batching_interval and \
                 (now - self.last_lease_confirmed_time) > self.election_timeout_min / 2: # < lease_duration = election_timeout_min - (max_clock_drift + max_network_delay):
                 # Lease expired - trigger fresh heartbeat round to reestablish leadership
                 await self.send_heartbeats()
@@ -279,7 +275,6 @@ class RaftNode:
                         reply_message='Stale leader or lease not confirmed',
                         source_id=self.node_id
                     ).to_dict()
-
                     return response
 
             # Safe to serve read now
@@ -287,10 +282,10 @@ class RaftNode:
             read_value = self.state_machine.get(key)
             if read_value is not None:
                 result = f"Read {key} = {read_value}"
-                reply_message = 'No append to log'
+                reply_message = 'OK. No append to log'
             else:
                 result = f"{key} not found for read"
-                reply_message = 'Try a different key'
+                reply_message = 'OK. Try a different key'
             
             response = ClientRequestResponse(
                 command_id=request.command_id,
@@ -300,9 +295,7 @@ class RaftNode:
                 reply_message=reply_message,
                 source_id=self.node_id
             ).to_dict()
-
             return response
-        
 
         # Request command is valid and not READ, append command to log
         entry = Entry(
@@ -327,11 +320,11 @@ class RaftNode:
         # Wait for commit or timeout
         try:
             result = await asyncio.wait_for(future, timeout=10.0)
-            reply_message = "Command committed"
+            reply_message = "OK. Command committed"
         except asyncio.TimeoutError:
             self.pending_client_responses.pop(log_index, None)
             result = "Request timed out from server".upper()
-            reply_message = "Request timed out before commit"
+            reply_message = "OK. Request timed out before commit"
 
         response = ClientRequestResponse(
             command_id=request.command_id,
@@ -341,8 +334,6 @@ class RaftNode:
             reply_message=reply_message,
             source_id=self.node_id
         ).to_dict()
-        # writer.write(encode_message(response.to_dict()))
-        # await writer.drain()
         return response
 
     def apply_committed_entries(self):
@@ -369,12 +360,12 @@ class RaftNode:
             entries_str = 'entry'
             if count > 1:
                 entries_str = 'entries'
-            print(f'Applied {count} {entries_str}. SM:', self.state_machine.dump())
+            print_out and print(f'Applied {count} {entries_str}. SM:', self.state_machine.dump())
             self.report(f'{self.role} {self.node_id} applied_batch of {count} {entries_str} to the SM')#, start=start_index, end=end_index, count=count)
 
         if self.last_applied - self.state.snapshot.last_included_index >= self.snapshot_threshold:
             self.create_snapshot()
-            print(f'Created own snapshot')
+            print_out and print(f'Created own snapshot')
             self.report(f'{self.role} {self.node_id} snapshot_created', snapshot_last_index=self.state.snapshot.last_included_index, snapshot_last_term=self.state.snapshot.last_included_term, log_length=len(self.state.log))
             
     async def replicate_log_to_peer(self, peer_id):
@@ -422,9 +413,9 @@ class RaftNode:
             self.tasks.add(task)
             task.add_done_callback(self.tasks.discard)
 
-        # we always reset election reset time after sending heartbeats/AppendEntries RPCs
-        # also reset the lease ack set
-        self.election_reset_time = time.monotonic()
+        # Reset the heartbeat timer
+        self.heartbeat_reset_time = time.monotonic()
+        # Reset the lease ack set after leader sends RPCs
         self.lease_ack_set.clear()
         # self.report(f'TIME RESET')
 
@@ -437,6 +428,11 @@ class RaftNode:
             commit_index=self.commit_index
         )
 
+    def reset_election_timer(self):
+        '''Reset the election timer after follower receives valid  RPCs. Also randomize the next election timeout period.'''
+        self.election_reset_time = time.monotonic()
+        self.election_timeout = self.random_timeout()
+
     async def handle_message(self, message: dict):
         # Handle incoming RPC messages and update node state accordingly
         msg_type = message.get('type')
@@ -446,7 +442,7 @@ class RaftNode:
             # Update term and convert to Follower if term higher than current
             self.state.current_term = msg_term
             await self.set_role('Follower')
-            self.role = 'Follower'
+            self.reset_election_timer()
             self.state.voted_for = None
             self.state.save()
             self.report(f'{self.role} {self.node_id} term_updated (received {msg_type} RPC with greater term)', term=msg_term)
@@ -467,7 +463,7 @@ class RaftNode:
                     vote_granted = True
                     self.state.voted_for = candidate_id
                     self.state.save()
-                    self.election_reset_time = time.monotonic()
+                    self.reset_election_timer()
                     reason = "vote granted: log is up to date"
                 else:
                     reason = "log not up to date"
@@ -494,6 +490,7 @@ class RaftNode:
                     # become Leader
                     self.role = 'Leader'
                     self.leader_id = self.node_id
+                    print('Became Leader')
                     self.report(f'{self.role} {self.node_id} became_leader', term=self.state.current_term)
 
                     # Initialize nextIndex for each follower to leader’s last log index + 1
@@ -512,15 +509,14 @@ class RaftNode:
 
                     # Send heartbeats immediately upon becoming Leader
                     await self.send_heartbeats()
-                    #self.election_reset_time = time.monotonic()
 
-                    # cancel the test_command_task if it already exists
-                    if self.test_command_task:
-                        self.test_command_task.cancel()
-                        try:
-                            await self.test_command_task
-                        except asyncio.CancelledError:
-                            pass
+                    # # cancel the test_command_task if it already exists
+                    # if self.test_command_task:
+                    #     self.test_command_task.cancel()
+                    #     try:
+                    #         await self.test_command_task
+                    #     except asyncio.CancelledError:
+                    #         pass
                     
                     # # create a new period test command task
                     # self.test_command_task = asyncio.create_task(self.periodic_test_commands())
@@ -541,10 +537,7 @@ class RaftNode:
             conflict_term_first_index = message['conflict_term_first_index']
             peer_last_log_index = message['last_log_index']
 
-            self.lease_ack_set.add(peer_id)
-            if len(self.lease_ack_set) >= len(self.peers) / 2:
-                self.last_lease_confirmed_time = time.monotonic()
-                self.report(f'LEASE REFRESHED')
+            self.refresh_leader_lease_on_valid_reply_from(peer_id)
 
             if success:
                 # 1. Update nextIndex and matchIndex
@@ -565,15 +558,11 @@ class RaftNode:
                     entry_term = self.state.get_term_at_index(majority_index) # self.state.log[self.state.global_to_local(majority_index)].term
                     if entry_term == self.state.current_term:
                         self.commit_index = majority_index
-                        self.report(
-                            f'{self.role} {self.node_id} commit_index_advanced',
-                            new_commit_index=self.commit_index
-                        )
+                        self.report(f'{self.role} {self.node_id} commit_index_advanced', new_commit_index=self.commit_index)
 
             else:
                 # AppendEntries failed (log inconsistency): decrement nextIndex and retry
                 # self.next_index[peer_id] = max(0, self.next_index[peer_id] - 1)
-
                 if conflict_term_first_index is not None:
                     self.next_index[peer_id] = max(0, conflict_term_first_index)
                 else:
@@ -603,8 +592,8 @@ class RaftNode:
                 ).to_dict()
                 return reply
             
-            # Reset election timeout on valid RPCs
-            self.election_reset_time = time.monotonic()
+            # Reset election timeout upon receving valid RPCs
+            self.reset_election_timer()
             self.role = 'Follower'  # Always follower on RPCs from leader
             # update leader_id to redirect clients
             self.leader_id = message.get('leader_id', None)
@@ -656,10 +645,7 @@ class RaftNode:
             peer_id = message['source_id']
             success = message['success']
 
-            self.lease_ack_set.add(peer_id)
-            if len(self.lease_ack_set) >= len(self.peers) / 2:
-                self.last_lease_confirmed_time = time.monotonic()
-                self.report(f'LEASE REFRESHED')
+            self.refresh_leader_lease_on_valid_reply_from(peer_id)
 
             # No need to do anything after the reply
             self.report(
@@ -669,9 +655,11 @@ class RaftNode:
             )
             return
 
-            # Update follower progress based on snapshot
-            # self.next_index[peer_id] = self.snapshot_last_included_index + 1
-            # self.match_index[peer_id] = self.snapshot_last_included_index
+    def refresh_leader_lease_on_valid_reply_from(self, peer_id):
+        self.lease_ack_set.add(peer_id)
+        if len(self.lease_ack_set) >= len(self.peers) / 2:
+            self.last_lease_confirmed_time = time.monotonic()
+            self.report(f'LEASE REFRESHED')
 
     def handle_append_entries(self, message: dict):
         term: int = message['term']
@@ -717,11 +705,10 @@ class RaftNode:
                 last_log_index=self.state.get_last_log_index(), 
                 commit_index=self.commit_index
             )
-
             return reply()
         
-        # Reset election timeout on valid AppendEntries
-        self.election_reset_time = time.monotonic()
+        # Reset election timeout on receiving valid RPCs
+        self.reset_election_timer()
         self.role = 'Follower'  # Always follower on AppendEntries from leader
         # update leader_id to redirect clients
         self.leader_id = leader_id
@@ -743,7 +730,6 @@ class RaftNode:
                     last_log_index=self.state.get_last_log_index(), 
                     commit_index=self.commit_index
                 )
-
                 return reply()
 
             if self.state.get_term_at_index(prev_log_index) != prev_log_term: # self.state.log[self.state.global_to_local(prev_log_index)].term != prev_log_term:
@@ -763,7 +749,6 @@ class RaftNode:
                     conflict_term = conflict_term,
                     conflict_term_first_index = conflict_term_first_index
                 )
-
                 return reply()
 
         # 3. If an existing entry conflicts with a new one, delete existing entry and all that follow it

@@ -47,7 +47,7 @@ async def monitor_cpu():
     while True:
         cpu = proc.cpu_percent(interval=None)
         print(f"[CPU] {cpu:.2f}%")
-        await asyncio.sleep(5)
+        await asyncio.sleep(1)
 
 async def main(node_id):
     # Validate config and start node event loop

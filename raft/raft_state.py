@@ -70,8 +70,9 @@ class RaftState:
             for entry in entries:
                 f.write(json.dumps(entry.to_dict()) + "\n")
 
-    def save_log_to_file(self, log_list: List[Entry]):
+    def save_log_to_file(self):
         '''Rewrites the whole log to file in disk'''
+        log_list = self.log 
         with open(self.log_file, "w") as f:
             for entry in log_list:
                 f.write(json.dumps(entry.to_dict()) + "\n")
@@ -118,7 +119,7 @@ class RaftState:
         # Discard previous log entries
         self.log_truncate_prefix(last_included_index)
         # Rewrite log file to reflect truncation
-        self.save_log_to_file(self.log)
+        self.save_log_to_file()
 
         # Save persistent state
         self.save()
@@ -143,7 +144,7 @@ class RaftState:
         '''Returns term at given global index. Raises error if the entry at global index has been discarded.'''
         if global_index == self.snapshot.last_included_index:
             return self.snapshot.last_included_term
-        if global_index < self.log_start_index:
+        elif global_index < self.log_start_index:
             raise IndexError("Index is before start of log and not in snapshot.")
         local_index = self.global_to_local(global_index)
         if local_index >= len(self.log):

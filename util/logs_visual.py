@@ -56,7 +56,7 @@ def print_logs(logs, window_size: int, log_start_index: int = 0):
     start_index = max(0, max_global_index - window_size + 1)
 
     # Print header
-    header = f'{(start_index//1000):02}k+' + ''.join(f'-{(i%1000):03}-' for i in range(start_index, start_index + window_size))
+    header = f'{(start_index//1000)%100:02}k+' + ''.join(f'-{(i%1000):03}-' for i in range(start_index, start_index + window_size))
     print(header)
 
     selected_log_start_index = get_log_start_index_of_log_with_highest_last_global_index()
