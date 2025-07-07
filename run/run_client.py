@@ -3,6 +3,7 @@ import sys
 from run.cluster_config import addresses, client_ports
 from raft.command import Command
 from run.client import Client
+import time
 
 async def main(client_id):
     client = Client(client_id) if client_id else Client()
@@ -16,6 +17,9 @@ async def main(client_id):
             key = None
             val = None
 
+            tasks = []
+            commands = []
+
             cmd_arg_list = command_str.split(' ')
             if len(cmd_arg_list) > 3:
                 print(f'Usage: <command_type> <key> <value> (example: create x 5)')
@@ -27,6 +31,16 @@ async def main(client_id):
                 if cmd_type == 'exit':
                     print("Goodbye")
                     break
+                if cmd_type == 'pipe':
+                    import random
+                    for i in range(40):
+                        cmd_type = random.choice(Command.allowed_cmds[1:])
+                        key = random.choice(['a','b','c','d','e','f','g','h','i','j'])
+                        val = random.choice([1,2,3,4,5,6,7,8,9,10])
+                        cmd = Command(cmd_type, key, val)
+                        commands.append(cmd)
+                    
+                    #return responses
             if len(cmd_arg_list) > 1:
                 key = cmd_arg_list[1]
             if len(cmd_arg_list) > 2:
@@ -35,8 +49,21 @@ async def main(client_id):
             cmd = Command(cmd_type, key, val)
             if not cmd:
                 continue
-            response = await client.send_command(cmd)
-            print(f'Result: {response.result} ({response.reply_message})')
+
+            commands.append(cmd) if cmd_type != 'pipe' else None
+            
+            for cmd in commands:
+                tasks.append(asyncio.create_task(client.send_command(cmd)))
+                
+            start_time = time.monotonic()
+            responses = await asyncio.gather(*tasks)
+            end_time = time.monotonic()
+            for response in responses:
+                #response = await client.send_command(cmd)
+                print(f'[{response.command_id:03d}] Result: {response.result} ({response.reply_message})')
+            latency = end_time - start_time
+            print(f'[Latency] {1000*latency:.4f} ms')
+
         except (KeyboardInterrupt, EOFError):
             print("\nInterrupted by user")
             break

@@ -12,23 +12,23 @@ class Client:
         self.current_node_index: int = random.choice(range(NUM_NODES))
         self.current_node = nodes[self.current_node_index]
         self.next_command_id = 0
-        self.timeout = 3    # seconds
+        self.timeout = 10    # seconds
         self.start_time = 0 # seconds
         self.end_time = 0   # seconds
 
     async def send_command(self, cmd: Command) -> ClientRequestResponse:
-        #self.next_command_id += 1
+        self.next_command_id += 1
         req = ClientRequest(client_id=self.client_id, command_id=self.next_command_id, command=cmd)
         try:
             MAX_ITER = 5 # max number of times retrying the request
             iterations = 0
-            self.start_time = time.perf_counter()  # high-resolution timer
+            # self.start_time = time.perf_counter()  # high-resolution timer
 
             while iterations < MAX_ITER: 
                 response = await self._send_to_node(self.current_node, req)
 
                 if response.from_leader:
-                    self.next_command_id += 1
+                    #self.next_command_id += 1
                     iterations and print()
                     return response#.result
                 elif response.leader_id:
@@ -36,7 +36,7 @@ class Client:
                     response = await self._send_to_node(self.current_node, req)
 
                     if response:
-                        self.next_command_id += 1
+                        #self.next_command_id += 1
                         iterations and print()
                         return response#.result
                     else:
@@ -60,10 +60,10 @@ class Client:
             latency_ms = (self.end_time - self.start_time) * 1000
             print(f"[Latency] {latency_ms:.4f} ms")  # or log to a file
             
-            return ClientRequestResponse(None, True, None, None, f"Tried to connect {iterations} times, no response, stop trying.", None)
+            return ClientRequestResponse(self.next_command_id, True, None, None, f"Tried to connect {iterations} times, no response, stop trying.", None)
         except asyncio.TimeoutError:
             iterations and print()
-            return ClientRequestResponse(None, True, None, None, "Request timed out", None)
+            return ClientRequestResponse(self.next_command_id, True, None, None, "Request timed out", None)
 
     async def _send_to_node(self, node_id, request: ClientRequest) -> ClientRequestResponse:
         host = addresses[node_id].split(':')[0]
@@ -77,12 +77,12 @@ class Client:
             await writer.wait_closed()
 
             # Calculate latency when final response
-            if(msg['from_leader']):
-                self.end_time = time.perf_counter()
-                latency_ms = (self.end_time - self.start_time) * 1000
-                print(f"[Latency] {latency_ms:.4f} ms")  # or log to a file
+            # if(msg['from_leader']):
+            #     self.end_time = time.perf_counter()
+            #     latency_ms = (self.end_time - self.start_time) * 1000
+            #     print(f"[Latency] {latency_ms:.4f} ms")  # or log to a file
 
             return ClientRequestResponse.from_dict(msg)
         except Exception as e:
-            # print(f'debug: Exception: {e}')
-            return ClientRequestResponse(None, False, 'exception', None, 'excepcion', None)
+            print(f'debug: Exception: {e}')
+            return ClientRequestResponse(request.command_id, False, 'exception', None, 'excepcion', None)

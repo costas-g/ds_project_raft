@@ -4,6 +4,7 @@ import os
 import logging
 from raft.raft_node import RaftNode
 import run.cluster_config as config
+import psutil
 
 def validate_config():
     required_timing_keys = ["heartbeat_interval", "election_timeout_min", "election_timeout_max"]
@@ -41,6 +42,13 @@ def event_logger(node_id, event, data):
     msg = f"{event}: {data}"
     logger.info(msg)
 
+async def monitor_cpu():
+    proc = psutil.Process(os.getpid())
+    while True:
+        cpu = proc.cpu_percent(interval=None)
+        print(f"[CPU] {cpu:.2f}%")
+        await asyncio.sleep(5)
+
 async def main(node_id):
     # Validate config and start node event loop
     validate_config()
@@ -49,6 +57,8 @@ async def main(node_id):
 
     # Setup logger FIRST, so it exists before any logging
     logger = setup_logger(node_id)
+    logger.info(f"-----------------------")
+    logger.info(f"-----------------------")
     logger.info(f"Node {node_id} starting")
 
     node = RaftNode(
@@ -63,6 +73,8 @@ async def main(node_id):
         election_timeout_max=timing["election_timeout_max"],
     )
     
+    asyncio.create_task(monitor_cpu())  # launch the CPU monitor
+
     await node.start()
 
     # Run until interrupted, then shutdown cleanly
