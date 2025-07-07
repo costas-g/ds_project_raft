@@ -28,28 +28,52 @@ def load_logs():
             continue
     return logs
 
-def print_logs(logs, window_size: int):
-    # Determine max log length
-    max_len = max((len(log) for log in logs.values()), default=0)
-    #window_size = 20
+def get_snapshot_index(node_id):
+    path = os.path.join(STATE_DIR, f'snapshot_{node_id}.json')
+    if os.path.exists(path):
+        with open(path) as f:
+            return json.load(f).get('last_included_index', -1)
+    return -1  # if no snapshot, treat as empty
 
-    # Calculate start index to slice logs, so we show last 20 entries of the longest log
-    start_index = max(0, max_len - window_size)
+def print_logs(logs, window_size: int, log_start_index: int = 0):
+    # Filter out nodes with empty or missing logs
+    active_logs = {nid: log for nid, log in logs.items() if log}
 
-    # Header with indexes
-    header = '--i-' + ''.join(f'-{i:04}-' for i in range(start_index, max_len))
+    if not active_logs:
+        print("No active logs to display.")
+        return
+
+    # Find max global index only among active logs
+    max_global_index = -1
+    for node_id, log in active_logs.items():
+        snapshot_index = get_snapshot_index(node_id)
+        log_start = snapshot_index + 1
+        global_end = log_start + len(log) - 1
+        if global_end > max_global_index:
+            max_global_index = global_end
+
+    # Calculate start index for window
+    start_index = max(0, max_global_index - window_size + 1)
+
+    # Print header
+    header = f'{(start_index//1000):02}k+' + ''.join(f'-{(i%1000):03}-' for i in range(start_index, start_index + window_size))
     print(header)
 
-    for node_id in sorted(logs.keys()):
-        row = f'[{node_id}]'
+    selected_log_start_index = get_log_start_index_of_log_with_highest_last_global_index()
 
-        log_slice = logs[node_id][start_index:] if len(logs[node_id]) > start_index else []
-        # Pad with empty spaces if log shorter than start_index
-        padding = window_size - len(log_slice)
-        row += ''.join(f'-{term:04}-' for term in log_slice)
-        row += '-' * 6 * padding  # 6 chars per entry like '-0000-'
-        
-        #row += ''.join(f'-{term:03}-' for term in logs[node_id])
+    # Print only nodes with logs (skip offline)
+    for node_id in sorted(active_logs.keys()):
+        row = f'[{node_id}]'
+        snapshot_index = get_snapshot_index(node_id)
+        log_start = snapshot_index + 1
+        log = active_logs[node_id]
+
+        for i in range(start_index, start_index + window_size):
+            local_index = i - log_start
+            if 0 <= local_index < len(log):
+                row += f'-{log[local_index]:03}-'
+            else:
+                row += '-----'
 
         print(row)
 
@@ -67,13 +91,44 @@ def print_logs(logs, window_size: int):
 
         print(f'[{node_id}] current_term = {current_term}')
 
+def get_log_start_index_of_log_with_highest_last_global_index():
+    max_last_global_index = -1
+    selected_log_start_index = None
+
+    for filename in os.listdir(STATE_DIR):
+        if filename.startswith('log_') and filename.endswith('.ndjson'):
+            node_id = filename[4:-7]
+            log_path = os.path.join(STATE_DIR, filename)
+            snapshot_path = os.path.join(STATE_DIR, f'snapshot_{node_id}.json')
+
+            # Load last_included_index
+            last_included_index = -1
+            if os.path.exists(snapshot_path):
+                with open(snapshot_path, 'r') as f:
+                    data = json.load(f)
+                    last_included_index = data.get('last_included_index', -1)
+
+            log_start_index = last_included_index + 1
+
+            # Count log entries
+            with open(log_path, 'r') as f:
+                log_len = sum(1 for _ in f)
+
+            last_global_index = log_start_index + log_len - 1
+
+            if last_global_index > max_last_global_index:
+                max_last_global_index = last_global_index
+                selected_log_start_index = log_start_index
+
+    return selected_log_start_index
 
 def monitor_logs(window_size: int):
     try:
         while True:
             os.system('cls' if os.name == 'nt' else 'clear')
             logs = load_logs()
-            print_logs(logs, window_size)
+            log_start_index = get_log_start_index_of_log_with_highest_last_global_index()
+            print_logs(logs, window_size, log_start_index)
             time.sleep(REFRESH_INTERVAL)
     except KeyboardInterrupt:
         pass

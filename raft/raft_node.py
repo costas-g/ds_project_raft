@@ -5,10 +5,12 @@ from typing import Set, List, Dict
 from raft.raft_state import RaftState
 from raft.messages.request_vote import RequestVote, RequestVoteReply
 from raft.messages.append_entries import AppendEntries, AppendEntriesReply
+from raft.messages.install_snapshot import InstallSnapshot, InstallSnapshotReply
 from raft.messages.message import read_message, encode_message, MESSAGE_TYPES
 from raft.entry import Entry
 from raft.command import Command
 from raft.state_machine import StateMachine
+from raft.snapshot import Snapshot
 
 class RaftNode:
     def __init__(
@@ -23,14 +25,15 @@ class RaftNode:
         election_timeout_min,
         election_timeout_max,
     ):
+        # Basic node attributes
         self.node_id = node_id
         self.peers = peers
         self.address_book = address_book
         self.leader_id: str = None
-        self.client_port = client_port
-        self.pending_client_responses: Dict[int, asyncio.Future] = {}
+        self.role = 'Follower'
+        self.votes_received = set()
 
-        # Persistent State
+        # Persistent State initialize and load from state files.
         self.state = RaftState(node_id)
 
         '''When referring to indexes of the log, 
@@ -46,15 +49,28 @@ class RaftNode:
         self.next_index: Dict[str, int] = {}     # For each follower, index of next log entry to send (initialized later)
         self.match_index: Dict[str, int] = {}    # For each follower, highest log entry known replicated (initialized later)
 
-        # State Machine
+        # Client related attributes
+        self.client_port = client_port
+        self.pending_client_responses: Dict[int, asyncio.Future] = {}
+
+        # State Machine initialization
         self.state_machine = StateMachine()
+         # Load snapshot data (if it exists) to state machine
+        if self.state.snapshot.data:
+            self.state_machine.load_snapshot(self.state.snapshot.data)
 
-        self.role = 'Follower'
-        self.votes_received = set()
+        # Properly initialize commit_index and last_applied given snapshot
+        self.commit_index: int = self.state.snapshot.last_included_index   # Index of highest log entry known to be committed (increases monotonically)
+        self.last_applied: int = self.state.snapshot.last_included_index   # Index of highest log entry applied to state machine (increases monotonically)
 
+        # Snapshot related attributes
+        self.snapshot_threshold: int = 100  # create snapshot every 100 applied entries
+        
+        # Lease for read commands
         self.lease_ack_set = set()  # reset every heartbeat round
         self.last_lease_confirmed_time = None
 
+        # Timing attributes
         self.election_reset_time = time.monotonic()
         self.batching_interval = batching_interval
         self.heartbeat_interval = heartbeat_interval
@@ -62,7 +78,8 @@ class RaftNode:
         self.election_timeout_max = election_timeout_max
         self.election_timeout = self.random_timeout()
         self.event_callback = event_callback
-        self.report(f'{self.role} {self.node_id} initialized_state', term=self.state.current_term, voted_for=self.state.voted_for, log_length=len(self.state.log))
+
+        self.report(f'{self.role} {self.node_id} initialized_state', term=self.state.current_term, voted_for=self.state.voted_for, last_snapshot_index=self.state.snapshot.last_included_index, log_length=len(self.state.log))
         
         # Keep track of all running asyncio tasks to manage lifecycle cleanly
         self.tasks: Set[asyncio.Task] = set()
@@ -102,20 +119,20 @@ class RaftNode:
 
     async def ticker(self):
         # Periodic task that triggers elections or heartbeats depending on role
-        prev_log_len = len(self.state.log)
+        prev_last_log_index = self.state.get_last_log_index() # initialization
         while True:
             await asyncio.sleep(0.01)
             now = time.monotonic()
 
             # Leader routine 
             if self.role == 'Leader':
-                # Send batches of entries if log has increased in length (i.e. if new commands from clients)
+                # Send batches of entries if last_log_index has been advanced (i.e. if new commands from clients)
                 # This needs to be checked before the empty heartbeats because they have priority over them
                 if now - self.election_reset_time >= self.batching_interval:
-                    if len(self.state.log) > prev_log_len:
+                    if self.state.get_last_log_index() > prev_last_log_index:
                         await self.send_heartbeats()
 
-                    prev_log_len = len(self.state.log)
+                    prev_last_log_index = self.state.get_last_log_index()
 
                 # Send periodic heartbeats
                 if now - self.election_reset_time >= self.heartbeat_interval:
@@ -186,7 +203,7 @@ class RaftNode:
 
             # Trigger immediate replication to peers
             await self.send_heartbeats()
-            #self.election_reset_time = time.time()
+            #self.election_reset_time = time.monotonic()
 
     async def handle_client_message(self, message):#, writer):
         from raft.messages.client_request import ClientRequest
@@ -247,6 +264,7 @@ class RaftNode:
             # then reply to client read request
             now = time.monotonic()
             if self.last_lease_confirmed_time is not None and \
+                (now - self.election_reset_time) > self.batching_interval and \
                 (now - self.last_lease_confirmed_time) > self.election_timeout_min / 2: # < lease_duration = election_timeout_min - (max_clock_drift + max_network_delay):
                 # Lease expired - trigger fresh heartbeat round to reestablish leadership
                 await self.send_heartbeats()
@@ -300,7 +318,7 @@ class RaftNode:
         # send heartbeats immediately upon receiving client command - or wait for batching them
         # await self.send_heartbeats()
 
-        log_index = len(self.state.log) - 1
+        log_index = self.state.get_last_log_index()
 
         # Register a future to wait for commit
         future = asyncio.Future()
@@ -333,12 +351,9 @@ class RaftNode:
             self.last_applied += 1
 
             last_applied = self.last_applied
-            cmd = self.state.log[last_applied].command
+            cmd = self.state.log[self.state.global_to_local(last_applied)].command
             # apply command, save result from return
             result = self.state_machine.apply(cmd)
-            # print result to console
-            # if result:
-            #     print(result)
             
             # Notify client if pending
             fut = self.pending_client_responses.pop(self.last_applied, None)
@@ -356,25 +371,46 @@ class RaftNode:
                 entries_str = 'entries'
             print(f'Applied {count} {entries_str}. SM:', self.state_machine.dump())
             self.report(f'{self.role} {self.node_id} applied_batch of {count} {entries_str} to the SM')#, start=start_index, end=end_index, count=count)
+
+        if self.last_applied - self.state.snapshot.last_included_index >= self.snapshot_threshold:
+            self.create_snapshot()
+            print(f'Created own snapshot')
+            self.report(f'{self.role} {self.node_id} snapshot_created', snapshot_last_index=self.state.snapshot.last_included_index, snapshot_last_term=self.state.snapshot.last_included_term, log_length=len(self.state.log))
             
     async def replicate_log_to_peer(self, peer_id):
         next_idx = self.next_index.get(peer_id, 0)
         prev_log_index = next_idx - 1
-        prev_log_term = self.state.log[prev_log_index].term if prev_log_index >= 0 else 0
 
-        # send required entries or no entries at all (heartbeat)
-        entries_to_send = self.state.log[next_idx:] if self.state.get_last_log_index() >= next_idx else []
+        if next_idx > self.state.snapshot.last_included_index:
+            # Send AppendEntries RPC
+            # prev_log_term can only be calculated now when the respective entry hasn't been discarded
+            prev_log_term = self.state.get_term_at_index(prev_log_index) # self.state.log[self.state.global_to_local(prev_log_index)].term if prev_log_index >= 0 else 0
+            # send required entries or no entries at all (heartbeat)
+            entries_to_send = self.state.log[self.state.global_to_local(next_idx):] if self.state.get_last_log_index() >= next_idx else []
 
-        msg = AppendEntries(
-            term=self.state.current_term,
-            leader_id=self.node_id,
-            prev_log_index=prev_log_index,
-            prev_log_term=prev_log_term,
-            entries=entries_to_send,  # may be empty (heartbeat)
-            leader_commit=self.commit_index
-        ).to_dict()
+            msg = AppendEntries(
+                term=self.state.current_term,
+                leader_id=self.node_id,
+                prev_log_index=prev_log_index,
+                prev_log_term=prev_log_term,
+                entries=entries_to_send,  # may be empty (heartbeat)
+                leader_commit=self.commit_index
+            ).to_dict()
 
-        #self.report(f'{self.role} {self.node_id} SENDING {len(entries_to_send)} ENTRIES TO {peer_id}')
+            #self.report(f'{self.role} {self.node_id} SENDING {len(entries_to_send)} ENTRIES TO {peer_id}')
+        else:
+            # Send InstallSnapshot RPC first
+            msg = InstallSnapshot(
+                term=self.state.current_term,
+                leader_id=self.node_id,
+                last_included_index=self.state.snapshot.last_included_index,
+                last_included_term=self.state.snapshot.last_included_term,
+                snapshot_data=self.state.snapshot.data
+            ).to_dict()
+            print(f'Sent snapshot to {peer_id}')
+            self.report(f'{self.role} {self.node_id} snapshot_sent to {peer_id}', last_included_index=self.state.snapshot.last_included_index)
+            # Update peer's next_index for the next heartbeat 
+            self.next_index[peer_id] = self.state.snapshot.last_included_index + 1
 
         task = asyncio.create_task(self.send_message(peer_id, msg))
         self.tasks.add(task)
@@ -431,7 +467,7 @@ class RaftNode:
                     vote_granted = True
                     self.state.voted_for = candidate_id
                     self.state.save()
-                    self.election_reset_time = time.time()
+                    self.election_reset_time = time.monotonic()
                     reason = "vote granted: log is up to date"
                 else:
                     reason = "log not up to date"
@@ -476,7 +512,7 @@ class RaftNode:
 
                     # Send heartbeats immediately upon becoming Leader
                     await self.send_heartbeats()
-                    #self.election_reset_time = time.time()
+                    #self.election_reset_time = time.monotonic()
 
                     # cancel the test_command_task if it already exists
                     if self.test_command_task:
@@ -526,7 +562,7 @@ class RaftNode:
                 majority_index = match_indexes[len(self.peers) // 2]
 
                 if majority_index > self.commit_index:
-                    entry_term = self.state.log[majority_index].term
+                    entry_term = self.state.get_term_at_index(majority_index) # self.state.log[self.state.global_to_local(majority_index)].term
                     if entry_term == self.state.current_term:
                         self.commit_index = majority_index
                         self.report(
@@ -551,6 +587,91 @@ class RaftNode:
                     peer=peer_id,
                     next_index=self.next_index[peer_id]
                 )
+
+        elif msg_type == 'InstallSnapshot':
+            # Step 1: Reply immediately if term < currentTerm
+            if msg_term < self.state.current_term:
+                success = False
+                reason = 'stale term'
+
+                self.report(f'{self.role} {self.node_id} InstallSnapshot_processed', success=success, reason = reason, term=self.state.current_term)
+
+                reply = InstallSnapshotReply(
+                    term=self.state.current_term,
+                    success=success,
+                    source_id=self.node_id
+                ).to_dict()
+                return reply
+            
+            # Reset election timeout on valid RPCs
+            self.election_reset_time = time.monotonic()
+            self.role = 'Follower'  # Always follower on RPCs from leader
+            # update leader_id to redirect clients
+            self.leader_id = message.get('leader_id', None)
+
+            # Steps 2, 3, 5, 6, 7: Create, write, and save new snapshot, truncate log as needed
+            last_included_index = message.get('last_included_index', None)
+
+            if last_included_index <= self.state.snapshot.last_included_index:
+                # Snapshot is older or same - ignore it
+                success = False
+                reason = 'older or same snapshot'
+
+                self.report(f'{self.role} {self.node_id} InstallSnapshot_processed', success=success, reason = reason, snapshot_index=last_included_index)
+
+                reply = InstallSnapshotReply(
+                    term=self.state.current_term,
+                    success=success,
+                    source_id=self.node_id
+                ).to_dict()
+                return reply
+            
+            # Snapshot is newer - save it
+            last_included_term = message.get('last_included_term', None)
+            snapshot_data = message.get('snapshot_data', None)
+
+            self.state.install_snapshot(last_included_index, last_included_term, snapshot_data)
+
+            # Step 8: reset state machine to snapshot state
+            self.state_machine.load_snapshot(snapshot_data)
+            
+            print(f'Installed received snapshot')
+            self.report(f'{self.role} {self.node_id} InstallSnapshot_processed', success=True, reason = 'newer snapshot', snapshot_index=last_included_index)
+
+            # Update commit and last applied indexes to snapshot index
+            self.commit_index = last_included_index
+            self.last_applied = last_included_index
+
+            reply = InstallSnapshotReply(
+                term=self.state.current_term,
+                success=True,
+                source_id=self.node_id
+            ).to_dict()
+            return reply
+
+        elif msg_type == 'InstallSnapshotReply':
+            if self.role != 'Leader' or msg_term != self.state.current_term:
+                return  # Ignore outdated or irrelevant replies
+
+            peer_id = message['source_id']
+            success = message['success']
+
+            self.lease_ack_set.add(peer_id)
+            if len(self.lease_ack_set) >= len(self.peers) / 2:
+                self.last_lease_confirmed_time = time.monotonic()
+                self.report(f'LEASE REFRESHED')
+
+            # No need to do anything after the reply
+            self.report(
+                f'{self.role} {self.node_id} InstallSnapshotReply received',
+                peer=peer_id,
+                success=success
+            )
+            return
+
+            # Update follower progress based on snapshot
+            # self.next_index[peer_id] = self.snapshot_last_included_index + 1
+            # self.match_index[peer_id] = self.snapshot_last_included_index
 
     def handle_append_entries(self, message: dict):
         term: int = message['term']
@@ -593,21 +714,21 @@ class RaftNode:
                 success=success, 
                 reason = reason, 
                 term=self.state.current_term, 
-                log_length=len(self.state.log), 
+                last_log_index=self.state.get_last_log_index(), 
                 commit_index=self.commit_index
             )
 
             return reply()
         
         # Reset election timeout on valid AppendEntries
-        self.election_reset_time = time.time()
+        self.election_reset_time = time.monotonic()
         self.role = 'Follower'  # Always follower on AppendEntries from leader
         # update leader_id to redirect clients
         self.leader_id = leader_id
 
         # 2. Reply false if log doesn’t contain entry at prevLogIndex with matching term
         if prev_log_index >= 0:
-            if prev_log_index >= len(self.state.log):
+            if prev_log_index >= self.state.get_last_log_index() + 1:
                 # Missing entry at prevLogIndex
                 success = False
                 reason = 'no matching entry index'
@@ -619,25 +740,25 @@ class RaftNode:
                     success=success, 
                     reason = reason, 
                     term=self.state.current_term, 
-                    log_length=len(self.state.log), 
+                    last_log_index=self.state.get_last_log_index(), 
                     commit_index=self.commit_index
                 )
 
                 return reply()
 
-            if self.state.log[prev_log_index].term != prev_log_term:
+            if self.state.get_term_at_index(prev_log_index) != prev_log_term: # self.state.log[self.state.global_to_local(prev_log_index)].term != prev_log_term:
                 # Exists an entry at prev_log_index but terms mismatch
                 success = False
                 reason = 'terms mismatch'
 
-                conflict_term = self.state.log[prev_log_index].term
+                conflict_term = self.state.get_term_at_index(prev_log_index) # self.state.log[self.state.global_to_local(prev_log_index)].term
                 conflict_term_first_index = self.state.get_term_first_index(conflict_term, prev_log_index)
 
                 self.report(f'{self.role} {self.node_id} AppendEntries_processed', 
                     success=success, 
                     reason = reason, 
                     term=self.state.current_term, 
-                    log_length=len(self.state.log), 
+                    last_log_index=self.state.get_last_log_index(), 
                     commit_index=self.commit_index,
                     conflict_term = conflict_term,
                     conflict_term_first_index = conflict_term_first_index
@@ -656,18 +777,19 @@ class RaftNode:
 
         for i, entry in enumerate(new_entries):
             index = prev_log_index + 1 + i
-            if index < len(self.state.log):
-                if self.state.log[index].term != entry.term:
+            if index < self.state.get_last_log_index() + 1:
+                if self.state.get_term_at_index(index) != entry.term: # self.state.log[self.state.global_to_local(index)].term != entry.term:
                     # Conflict: delete entry and all that follow it
                     reason = f'conflicting entry at index {index}'
-                    self.state.log = self.state.log[:index]
+                    self.state.log_truncate_suffix(index) # self.state.log = self.state.log[:index]
+                    self.state.save_log_to_file()
                     conflict_index = index
                     # After truncation, fall through to append remaining entries
                     break 
                 else:
                     reason = f'entries up to index {index} already existed'
                     conflict_index = index + 1
-            elif index == len(self.state.log):
+            elif index == self.state.get_last_log_index() + 1:
                 if i == 0:
                     # No conflict and log ends here - skip to append
                     reason = 'no conflicting entries'
@@ -703,7 +825,7 @@ class RaftNode:
                 success=success, 
                 reason = reason, 
                 term=self.state.current_term, 
-                log_length=len(self.state.log), 
+                last_log_index=self.state.get_last_log_index(), 
                 commit_index=self.commit_index
             )
         else:
@@ -711,14 +833,14 @@ class RaftNode:
                 success=success, 
                 reason = reason, 
                 term=self.state.current_term, 
-                log_length=len(self.state.log), 
+                last_log_index=self.state.get_last_log_index(), 
                 commit_index=self.commit_index
             )
 
         return reply()
 
     async def send_message(self, peer_id, message):
-        # Send a message over TCP to a peer and handle response
+        # Send a RPC message over TCP to a peer and handle response
         try:
             host, port = self.address_book[peer_id].split(':')
             reader, writer = await asyncio.open_connection(host, int(port))
@@ -781,3 +903,12 @@ class RaftNode:
         finally:
             writer.close()
             await writer.wait_closed()
+
+    def create_snapshot(self):
+        '''Called by the node itself. Creates a new snapshot and installs it.'''
+        snapshot_data = self.state_machine.get_snapshot()
+        last_index = self.last_applied
+        term = self.state.get_term_at_index(last_index) # self.state.log[self.state.global_to_local(last_index)].term 
+
+        # Install snapshot
+        self.state.install_snapshot(last_index, term, snapshot_data)

@@ -1,4 +1,4 @@
-#key value store  for set , delete , update 
+#key value store  for create, read, update, delete
 import threading    # using threads in case 
                     # multiple threads apply entries to the store
 from raft.command import Command
@@ -46,6 +46,13 @@ class StateMachine:
                 # return f"Deleted {key}" if popped is not None else f"{key} not found"
             else:
                 return f"Invalid command: {cmd}"
+            
+    def load_snapshot(self, snapshot_data: dict):
+        self.store = snapshot_data.copy()  # assumes self.store is the internal KV state
+
+    def get_snapshot(self) -> dict:
+        '''Return a shallow copy of the current state'''
+        return self.store.copy()
 
     def get(self, key):
         return self.store.get(key)
@@ -54,4 +61,4 @@ class StateMachine:
         return f"StateMachine({self.store})"
 
     def dump(self):
-        return dict(self.store)  # Return a copy
+        return dict(self.store)  # Return a copy - Essentially the same as get_snapshot
