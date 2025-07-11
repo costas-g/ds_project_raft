@@ -12,10 +12,7 @@ from raft.entry import Entry
 from raft.command import Command
 from raft.state_machine import StateMachine
 from raft.snapshot import Snapshot
-
-print_out = False       # for controlling print statements
-CLOCK_PERIOD = 0.001    # for ticker
-MAX_LOG = 200           # maximum local log length
+from run.cluster_config import print_out, CLOCK_PERIOD, MAX_LOG, lan_ip_addresses
 
 class RaftNode:
     def __init__(
@@ -23,7 +20,7 @@ class RaftNode:
         node_id: str,
         peers: List[str],
         address_book,
-        client_port,
+        # client_port,
         event_callback,
         batching_interval,
         heartbeat_interval,
@@ -55,7 +52,7 @@ class RaftNode:
         self.match_index: Dict[str, int] = {}    # For each follower, highest log entry known replicated (initialized later)
 
         # Client related attributes
-        self.client_port = client_port
+        # self.client_port = client_port
         self.pending_client_responses: Dict[int, asyncio.Future] = {}
 
         # State Machine initialization
@@ -850,8 +847,9 @@ class RaftNode:
 
     async def start_client_server(self):
         # TCP server that listens for incoming messages from clients
-        host, _ = self.address_book[self.node_id].split(':')
-        port = self.client_port
+        # host, _ = self.address_book[self.node_id].split(':')
+        host, port = lan_ip_addresses[self.node_id].split(':') # For incoming external client communication when port forwarding is set up. 
+        # port = self.client_port
         server = await asyncio.start_server(self.handle_client_connection, host, int(port))
 
         async with server:

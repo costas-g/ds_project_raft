@@ -22,8 +22,8 @@ def validate_config():
     if not hasattr(config, "addresses"):
         raise RuntimeError("Missing 'addresses' in config")
 
-    if not hasattr(config, "client_ports"):
-        raise RuntimeError("Missing 'client_ports' in config")
+    # if not hasattr(config, "client_ports"):
+    #     raise RuntimeError("Missing 'client_ports' in config")
 
 def setup_logger(node_id):
     # Setup per-node logger writing to logs/<node_id>.log
@@ -65,7 +65,7 @@ async def main(node_id):
         node_id,
         peers,
         config.addresses,
-        client_port=config.client_ports[node_id],
+        # client_port=config.client_ports[node_id],
         event_callback=event_logger,
         batching_interval=timing["batching_interval"],
         heartbeat_interval=timing["heartbeat_interval"],

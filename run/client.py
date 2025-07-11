@@ -1,7 +1,7 @@
 import asyncio
 import random
 import time
-from run.cluster_config import NUM_NODES, nodes, addresses, client_ports
+from run.cluster_config import NUM_NODES, nodes, addresses, remote_addresses
 from raft.messages.message import encode_message, read_message
 from raft.messages.client_request import ClientRequest, ClientRequestResponse
 from raft.command import Command
@@ -66,8 +66,8 @@ class Client:
             return ClientRequestResponse(self.next_command_id, False, None, None, "Request timed out", None)
 
     async def _send_to_node(self, node_id, request: ClientRequest) -> ClientRequestResponse:
-        host = addresses[node_id].split(':')[0]
-        port = client_ports[node_id]
+        host, port = remote_addresses[node_id].split(':')
+        # port = client_ports[node_id]
         try:
             reader, writer = await asyncio.wait_for(asyncio.open_connection(host, port), timeout=self.timeout)
             writer.write(encode_message(request.to_dict()))

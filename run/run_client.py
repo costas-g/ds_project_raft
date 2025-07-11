@@ -1,6 +1,6 @@
 import asyncio
 import sys
-from run.cluster_config import addresses, client_ports
+from run.cluster_config import addresses, remote_addresses
 from raft.command import Command
 from run.client import Client
 import time
@@ -8,7 +8,7 @@ import time
 async def main(client_id):
     client = Client(client_id) if client_id else Client()
     print(f"Connected to Raft cluster as {client.client_id}")
-    print(f"Selected Raft Node {client.current_node} at {addresses[client.current_node].split(':')[0]}:{client_ports[client.current_node]}")
+    print(f"Selected Raft Node {client.current_node} at {remote_addresses[client.current_node]}")
     print("Type commands to send:")
     while True:
         try:
