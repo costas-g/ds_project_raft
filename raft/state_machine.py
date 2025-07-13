@@ -1,12 +1,15 @@
 #key value store  for create, read, update, delete
 import threading    # using threads in case 
                     # multiple threads apply entries to the store
+# import asyncio
+# from collections import defaultdict
 from raft.command import Command
 
 class StateMachine:
     def __init__(self):
         self.store = {}
         self.lock = threading.Lock()
+        # self.locks = defaultdict(asyncio.Lock)  # One lock per key
 
     def apply(self, command: Command):
         if command.cmd_type == 'no-op':
@@ -16,7 +19,7 @@ class StateMachine:
         key = command.key
         value = command.value
         
-        
+        # with self.locks[key]:
         with self.lock:  
             if cmd == "create":
                 if key in self.store:

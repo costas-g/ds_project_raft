@@ -148,7 +148,8 @@ class RaftNode:
                     await self.start_election()
 
             # Apply commited entries routine for all
-            self.apply_committed_entries()
+            if self.last_applied < self.commit_index:
+                self.apply_committed_entries()
 
     async def set_role(self, new_role: str):
         if self.role == 'Leader' and new_role != 'Leader':
@@ -336,12 +337,12 @@ class RaftNode:
     def apply_committed_entries(self):
         start_index = None # for report logging 
         while self.last_applied < self.commit_index:
-            self.last_applied += 1
+            next_to_apply_idx = self.last_applied + 1
 
-            last_applied = self.last_applied
-            cmd = self.state.log[self.state.global_to_local(last_applied)].command
+            cmd = self.state.log[self.state.global_to_local(next_to_apply_idx)].command
             # apply command, save result from return
             result = self.state_machine.apply(cmd)
+            self.last_applied += 1
             
             # Notify client if pending
             fut = self.pending_client_responses.pop(self.last_applied, None)
@@ -351,6 +352,40 @@ class RaftNode:
             if start_index is None:
                 start_index = self.last_applied
 
+            # Code for applying commutative commands concurrently
+            # We would actually need multiprocessing in Python for real parallelism due to the GIL limit
+            # But for simple CRUD commands where the CPU work is negligible, there would be no real gain  
+            # first_log_index_in_batch = next_to_apply_idx
+            # batch = []
+            # used_keys = set()
+
+            # # Look ahead and build a batch of non-conflicting commands
+            # j = next_to_apply_idx
+            # while j <= self.commit_index:
+            #     cmd = self.state.log[self.state.global_to_local(j)].command
+            #     key = cmd.key
+            #     if key in used_keys:
+            #         break
+            #     used_keys.add(key)
+            #     batch.append(cmd)
+            #     j += 1
+
+            # # Apply the batch concurrently
+            # tasks = [asyncio.create_task(self.state_machine.apply(c)) for c in batch]
+            # results = await asyncio.gather(*tasks)
+
+            # self.last_applied = j - 1
+            # next_to_apply_idx = j
+            # if start_index is None:
+            #     start_index = first_log_index_in_batch
+
+            # # Notify client if pending
+            # for i, result in enumerate(results, start=first_log_index_in_batch):
+            #     fut = self.pending_client_responses.pop(i, None)
+            #     if fut and not fut.done():
+            #         fut.set_result(result)
+
+        # For reporting to the log and to the console
         if start_index is not None:
             end_index = self.last_applied
             count = end_index - start_index + 1
@@ -360,6 +395,7 @@ class RaftNode:
             print_out and print(f'Applied {count} {entries_str}. SM:', self.state_machine.dump())
             self.report(f'{self.role} {self.node_id} applied_batch of {count} {entries_str} to the SM')#, start=start_index, end=end_index, count=count)
 
+        # Create Snapshot if max threshold is exceeded
         if self.last_applied - self.state.snapshot.last_included_index >= self.snapshot_threshold:
             self.create_snapshot()
             print_out and print(f'Created own snapshot')
