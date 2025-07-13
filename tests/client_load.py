@@ -1,5 +1,6 @@
 import asyncio
 import random
+import string
 import time
 import argparse
 from raft.command import Command
@@ -18,8 +19,8 @@ class PerformanceTester:
     async def send_command(self, cmd_id):
         # generate a random command
         cmd_type = random.choice(Command.allowed_cmds[1:])
-        key = random.choice(['a','b','c','d','e','f','g','h','i','j'])
-        val = random.choice([0,1,2,3,4,5,6,7,8,9])
+        key = random.choice(list(string.ascii_lowercase[:26]))
+        val = random.choice(list(range(10)))
         cmd = Command(cmd_type, key, val)
 
         start = time.monotonic()

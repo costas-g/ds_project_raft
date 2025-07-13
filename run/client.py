@@ -52,7 +52,7 @@ class Client:
 
                 # print('.', end='', flush=True)#f'try {iterations}')
                 iterations += 1
-                iterations > 4 and print('failed on retry', iterations)
+                # iterations > 4 and print('failed on retry', iterations)
 
             # iterations and print()
 
