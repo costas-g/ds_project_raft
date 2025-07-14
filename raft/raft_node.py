@@ -147,9 +147,9 @@ class RaftNode:
                 if now - self.election_reset_time >= self.election_timeout:
                     await self.start_election()
 
-            # Apply commited entries routine for all
-            if self.last_applied < self.commit_index:
-                self.apply_committed_entries()
+            # # Apply commited entries routine for all
+            # if self.last_applied < self.commit_index:
+            #     self.apply_committed_entries()
 
     async def set_role(self, new_role: str):
         if self.role == 'Leader' and new_role != 'Leader':
@@ -592,6 +592,9 @@ class RaftNode:
                     if entry_term == self.state.current_term:
                         self.commit_index = majority_index
                         self.report(f'{self.role} {self.node_id} commit_index_advanced', new_commit_index=self.commit_index)
+                        # Apply commited entries 
+                        if self.last_applied < self.commit_index:
+                            self.apply_committed_entries()
 
             else:
                 # AppendEntries failed (log inconsistency): decrement nextIndex and retry
@@ -663,6 +666,10 @@ class RaftNode:
             # Update commit and last applied indexes to snapshot index
             self.commit_index = last_included_index
             self.last_applied = last_included_index
+
+            # Apply commited entries 
+            if self.last_applied < self.commit_index:
+                self.apply_committed_entries()
 
             reply = InstallSnapshotReply(
                 term=self.state.current_term,
@@ -833,6 +840,9 @@ class RaftNode:
             self.commit_index = min(leader_commit, last_new_entry_index)
 
         # Optionally, apply newly committed entries to state machine here or via separate async task
+        # Apply commited entries routine for all
+        if self.last_applied < self.commit_index:
+            self.apply_committed_entries()
 
         success = True
         conflict_term = None
