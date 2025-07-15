@@ -3,6 +3,7 @@ import sys
 import os
 import asyncio
 from run.cluster_config import nodes
+import psutil
 
 NODE_IDS = nodes #['n1', 'n2', 'n3']  # Adjust as needed
 RUN_NODE_SCRIPT = os.path.abspath('run/run_node.py')
@@ -13,6 +14,10 @@ async def run_node(node_id):
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE
     )
+
+    # # SET A SPECIFIC CORE BASED ON node_id
+    # p = psutil.Process(proc.pid)
+    # p.cpu_affinity([1,2,3])  # pin to CPU core 0 [1,2,3] [int(node_id[1])]
 
     async def read_stream(stream, prefix):
         try:

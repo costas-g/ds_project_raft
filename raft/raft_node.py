@@ -262,6 +262,7 @@ class RaftNode:
                 (now - self.last_lease_confirmed_time) > self.election_timeout_min / 2: # < lease_duration = election_timeout_min - (max_clock_drift + max_network_delay):
                 # Lease expired - trigger fresh heartbeat round to reestablish leadership
                 await self.send_heartbeats()
+                print('Sent heartbeats for lease update')
 
                 if self.last_lease_confirmed_time is not None and \
                 (now - self.last_lease_confirmed_time) > self.election_timeout_min / 2:
