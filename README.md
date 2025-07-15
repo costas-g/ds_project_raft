@@ -57,9 +57,12 @@ The codebase is designed for educational use and experimentation with distribute
     Example for a 3-node cluster:
 
     ```bash
-    python node.py --id 1
-    python node.py --id 2
-    python node.py --id 3
+    python -m run.run_node n1
+    ```
+
+    Or you can run the ready 3 node cluster at once. 
+    ```bash
+    python -m run.run_cluster
     ```
 
 3. **Run the client**
@@ -67,7 +70,7 @@ The codebase is designed for educational use and experimentation with distribute
     The client connects to the cluster, detects the leader, and sends commands.
 
     ```bash
-    python client.py
+    python -m tests.client_load
     ```
 
     The client will automatically follow redirects from followers and retry if a node is offline.
