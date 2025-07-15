@@ -21,12 +21,16 @@ The codebase is designed for educational use and experimentation with distribute
 
 ## Features
 
-- **Leader Election:** Automatic election of a cluster leader.
-- **Log Replication:** Consistent log entry replication across nodes.
-- **Fault Tolerance:** Nodes handle crashes and can recover/rejoin the cluster.
-- **Async Client:** Modern `asyncio`-based TCP client for interacting with the Raft cluster.
-- **Threaded Node Simulation:** Each node runs in its own thread and communicates via Python queues.
-- **Customizable Cluster:** Easily configurable node settings.
+- **Leader Election:** Simulates leader election among Raft nodes.
+- **Log Replication:** Supports append and replication of log entries.
+- **Fault Tolerance:** Nodes handle failures and can rejoin the cluster.
+- **Snapshotting:** Periodically creates snapshots of the replicated log to optimize memory usage and speed up recovery.
+- **Batching:** Supports batching of client commands for efficient log replication and higher throughput.
+- **Async Client:** Uses `asyncio` for modern, non-blocking client-server communication.
+- **Threaded Nodes:** Each node runs in its own thread, using queues for inter-node communication.
+- **Configurable Cluster:** Easily modify node configuration and network parameters.
+- **Client Testing Command:** Provides tools for sending test commands to the cluster and measuring system response.
+
 
 ## Installation
 
@@ -77,14 +81,47 @@ The codebase is designed for educational use and experimentation with distribute
 
 ## Project Structure
 
-ds_project_raft/
+ds_project_raft-main/
 │
-├── node.py # Main Raft node logic
-├── client.py # Asyncio-based TCP client
-├── cluster_config.py # Cluster node configuration
-├── raft/ # Raft protocol logic (utilities, message handling)
-├── requirements.txt # Python package requirements
-└── README.md # Project documentation
+├── logs/                    # Log files for each node (n1, n2, n3, ...)
+│
+├── raft/                    # Core Raft implementation
+│   ├── messages/            # Message definitions for Raft protocol
+│   │   ├── append_entries.py
+│   │   ├── client_request.py
+│   │   ├── install_snapshot.py
+│   │   ├── init.py
+│   │   ├── message.py
+│   │   ├── request_vote.py
+│   ├── command.py
+│   ├── entry.py
+│   ├── init.py
+│   ├── raft_node.py
+│   ├── raft_state.py
+│   ├── snapshot.py
+│   ├── state_machine.py
+│
+├── run/                     # Scripts to start and manage the cluster/client
+│   ├── client.py
+│   ├── cluster_config.py
+│   ├── init.py
+│   ├── run_client.py
+│   ├── run_node.py
+│
+├── states/                  # Folder for storing node states as JSON
+│   └── ...                  # JSON files
+│
+├── tests/                   # Test scripts
+│   ├── client_load.py
+│   ├── crashes.py
+│   ├── demo.py
+│   ├── demo2.py
+│
+├── util/                    # Utility scripts
+│   ├── logs_visual.py
+│   ├── tail_logs.py
+
+
 
 
 ## Authors
@@ -95,7 +132,7 @@ ds_project_raft/
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the EKPA License.
 
 ## References
 
