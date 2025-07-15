@@ -81,8 +81,8 @@ The codebase is designed for educational use and experimentation with distribute
 
 ## Project Structure
 
+```plaintext
 ds_project_raft-main/
-│
 ├── logs/                    # Log files for each node (n1, n2, n3, ...)
 │
 ├── raft/                    # Core Raft implementation
@@ -120,6 +120,8 @@ ds_project_raft-main/
 ├── util/                    # Utility scripts
 │   ├── logs_visual.py
 │   ├── tail_logs.py
+│
+└── README.md                # Project documentation
 
 
 
