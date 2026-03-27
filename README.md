@@ -129,8 +129,7 @@ ds_project_raft-main/
 ## Authors
 
 - [costas-g](https://github.com/costas-g)
-- [Panagiotis](https://github.com/yourusername)  <!-- Replace with your actual GitHub username if desired -->
-- [Other contributors...]
+- [Panagiotis](https://github.com/yourusername)
 
 ## License
 
